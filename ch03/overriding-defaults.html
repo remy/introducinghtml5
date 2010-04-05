@@ -7,7 +7,6 @@
 body {
   font-family: "helvetica neue", arial, helvetica;
 }
-form:nth-child(1) { display: none; }
 </style>
 </head>
 <body>
@@ -31,7 +30,6 @@ form:nth-child(1) { display: none; }
 var email = document.getElementById('pirateemail');
 email.form.onsubmit = function () {
   email.setCustomValidity("\n" + email.value + " be not a legal e-mail address");
-  return false;
 };
 </script>
  </body>
