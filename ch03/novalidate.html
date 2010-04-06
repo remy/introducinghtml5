@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset=utf-8 />
+<title>No validate</title>
+<style>
+body {
+  font-family: "helvetica neue", arial, helvetica;
+}
+</style>
+</head>
+<body>
+<form>
+  <input id="email" name="email" type="email" />
+  <input type="url" name="url" required />
+  <input type="submit" />
+  <input type="submit" formnovalidate value="submit - but I won't validate" />
+</form>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset=utf-8 />
+<title>JavaScript validity on form fields</title>
+<style>
+body, input, textarea {
+  font-family: "helvetica", arial, helvetica;
+}
+label {
+  display: block;
+  float: left;
+  clear: left;
+  text-align: right;
+  width: 100px;
+  margin-right: 10px;
+}
+
+div { padding: 10px; }
+
+fieldset { border: 1px solid #ccc; margin-bottom: 20px; }
+
+</style>
+</head>
+<body>
+<form>
+  <fieldset>
+    <legend>Some bits about you</legend>
+    <div><label for="email">Email:</label> <input id="email" name="email" type="email" /></div>
+    <div><label for="url">Homepage:</label><input id="url" type="url" name="url" required /></div> 
+    <div><textarea name="comment" cols="100" rows="5" required></textarea></div>
+  </fieldset>
+  <input type="submit" />
+</form>
+<script>
+// default validation messages
+var messages = {
+  email: 'be not a legal email address',
+  url: 'be not a valid web address',
+  comment: 'ye have to specify ye value'
+};
+var forms = document.getElementsByTagName('form'), i = forms.length, j, el;
+while (i--) {
+  j = forms[i].length;
+  while (j--, el = forms[i][j]) {
+    if (el.willValidate && messages[el.name]) {
+      el.setCustomValidity(messages[el.name]);
+    }
+  }
+}
+</script>
+<script>
+var form = document.getElementsByTagName('form')[0];
+form.onsubmit = function (event) {
+  var i = this.length, el, cont = true, errors = [];
+  while (i--, el = this[i]) {
+    if (el.willValidate) {
+      if (!el.validity.valid) {
+        errors.push('Error with ' + el.name + (el.validationMessage ? ': ' + el.validationMessage: ''));
+        cont = false;
+      }
+    }
+  }
+  
+  if (errors.length) {
+    // replace alert with your sexy CSS info bubbles
+    alert(errors.join('\n'));
+  }
+
+  return cont;
+};
+</script>
+</body>
+</html>
