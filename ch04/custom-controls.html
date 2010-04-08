@@ -244,6 +244,7 @@ function getLeft(el) {
 }
 
 function updateSeekable() {
+  console.log((100 / (video.duration || 1) * (this.seekable && this.seekable.length ? this.seekable.end() : this.duration)), video.duration, this.seekable, this.seekable.length ? this.seekable.end() : '-');
   buffer.style.width = (100 / (video.duration || 1) * (this.seekable && this.seekable.length ? this.seekable.end() : this.duration)) + '%';
 }
 
