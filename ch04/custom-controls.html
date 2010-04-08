@@ -19,7 +19,6 @@ body {
 }
 
 .videochrome .controls {
-/*  background: rgba(0,0,0,.3);*/
   position: absolute;
   top: 0;
   bottom: 0;
@@ -78,7 +77,7 @@ body {
 }
 
 .videochrome .scrub .loaded {
-  background: rgba(229,229,229,0.5);
+  background: rgba(229,229,229,0.3);
   margin: 10px 0;
   height: 10px;
   overflow: hidden;
@@ -146,7 +145,6 @@ body {
 <body>
   <div class="videochrome">
     <div class="controls">
-      <!-- <input type="button" class="play" value="play &#x25B8;" disabled /> -->
       <div class="scrub">
         <div class="play">&#x25BA;</div>
         <div class="duration">0:00</div>
@@ -160,6 +158,10 @@ body {
       Please download the video in <a href="leverage-a-synergy.ogv">Ogg</a> or <a href="leverage-a-synergy.mp4">mp4</a> format.
     </video>
   </div>
+  <p id="speed">
+    <a href="#slower">slower</a>
+    <a href="#faster">faster</a>
+  </p>
 <script>
 var video = document.getElementsByTagName('video')[0],
     scrubbing = false,
@@ -183,16 +185,20 @@ video.addEventListener('canplay', function () {
   initControls();
 }, false);
 
+document.querySelector('#speed').addEventListener('click', function (event) {
+  video.playbackRate += event.target.hash == '#slower' ? -0.2 : 0.2;
+}, false);
+
 video.addEventListener('progress', updateSeekable, false);
 video.addEventListener('durationchange', updateSeekable, false);
 video.addEventListener('timeupdate', updatePlayhead, false);
 
 wrapper.addEventListener('keydown', function (event) {
-  if (event.which == 32) {
+  if (event.which == 32) { // space
     play.onclick();
-  } else if (event.which == 37) {
+  } else if (event.which == 37) { // left cursor
     video.currentTime -= 0.08;
-  } else if (event.which == 39) {
+  } else if (event.which == 39) { // right cursor
     video.currentTime += 0.08; // about 1/12 of a second
   }
 }, false);
@@ -225,7 +231,7 @@ document.addEventListener('mousemove', function (event) {
 function asTime(t) {
   t = Math.round(t);
   var s = t % 60;
-  var m = Math.floor(t / 60);
+  var m = ~~(t / 60);
   
   return m + ':' + two(s);
 }
