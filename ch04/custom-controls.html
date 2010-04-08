@@ -259,6 +259,7 @@ function getLeft(el) {
 
 function updateSeekable() {
   buffer.style.width = (100 / (video.duration || 1) * (this.seekable && this.seekable.length ? this.seekable.end() : this.duration)) + '%';
+  duration.innerHTML = asTime(video.duration);
 }
 
 function updatePlayhead() {
