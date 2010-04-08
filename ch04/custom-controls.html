@@ -197,7 +197,11 @@ wrapper.addEventListener('keydown', function (event) {
   }
 }, false);
 
-buffer.addEventListener('click', movePlayHead, false);
+buffer.addEventListener('click', function () {
+  scrubbing = true;
+  movePlayHead(event);
+  scrubbing = false;
+}, false);
 
 buffer.addEventListener('mousedown', function (event) {
   scrubbing = true;
@@ -236,6 +240,7 @@ function movePlayHead(event) {
   video.currentTime = (100 / scrubWidth * (event.clientX - bufferLeft + 10)) * (video.duration / 100);
   event.preventDefault();
   event.stopPropagation();
+  
 }
 
 function getLeft(el) {
@@ -251,8 +256,10 @@ function updateSeekable() {
 }
 
 function updatePlayhead() {
-  playhead.style.width = (100 / (video.duration) * this.currentTime) + '%';
-  currentTime.innerHTML = asTime(video.currentTime);
+  setTimeout(function () {
+    playhead.style.width = (100 / (video.duration) * video.currentTime) + '%';
+    currentTime.innerHTML = asTime(video.currentTime);
+  }, 25);
 }
 
 function initControls() {
