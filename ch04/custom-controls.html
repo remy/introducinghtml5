@@ -47,10 +47,10 @@ body {
 
 .videochrome .duration {
   margin-left: 10px;
+  margin-right: 10px;
   font-family: "helvetica neue", arial, helvetica;
   float: right;
   display: block;
-  width: 30px;
   font-size: 10px;
   line-height: 30px;
   height: 30px;
@@ -79,7 +79,7 @@ body {
 
 .videochrome .scrub .loaded {
   background: rgba(229,229,229,0.5);
-  margin: 10px 5px;
+  margin: 10px 0;
   height: 10px;
   overflow: hidden;
   cursor: pointer;
@@ -181,8 +181,6 @@ video.addEventListener('canplay', function () {
   this.parentNode.style.width = this.videoWidth + 'px';
   scrubWidth = parseFloat(getComputedStyle(buffer.parentNode, null).width);
   initControls();
-  this.currentTime = 0;
-  document.body.className = document.body.className;
 }, false);
 
 video.addEventListener('progress', updateSeekable, false);
@@ -192,6 +190,10 @@ video.addEventListener('timeupdate', updatePlayhead, false);
 wrapper.addEventListener('keydown', function (event) {
   if (event.which == 32) {
     play.onclick();
+  } else if (event.which == 37) {
+    video.currentTime -= 0.08;
+  } else if (event.which == 39) {
+    video.currentTime += 0.08; // about 1/12 of a second
   }
 }, false);
 
