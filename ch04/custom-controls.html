@@ -157,7 +157,7 @@ body {
       <source src="leverage-a-synergy.ogv" type="video/ogg" />
       <source src="leverage-a-synergy.ogv" type="video/mp4" />
       Your browser doesn't support video. 
-      Please download the video in <a href=leverage-a-synergy.ogv>Ogg</a> or <a      href=leverage-a-synergy.mp4>mp4</a> format.
+      Please download the video in <a href="leverage-a-synergy.ogv">Ogg</a> or <a href="leverage-a-synergy.mp4">mp4</a> format.
     </video>
   </div>
 <script>
@@ -188,6 +188,12 @@ video.addEventListener('canplay', function () {
 video.addEventListener('progress', updateSeekable, false);
 video.addEventListener('timeupdate', updatePlayhead, false);
 
+wrapper.addEventListener('keydown', function (event) {
+  if (event.which == 32) {
+    play.onclick();
+  }
+}, false);
+
 buffer.addEventListener('click', movePlayHead, false);
 
 buffer.addEventListener('mousedown', function (event) {
@@ -212,7 +218,7 @@ document.addEventListener('mousemove', function (event) {
 function asTime(t) {
   t = Math.round(t);
   var s = t % 60;
-  var m = Math.round(t / 60);
+  var m = Math.floor(t / 60);
   
   return m + ':' + two(s);
 }
@@ -234,8 +240,6 @@ function getLeft(el) {
   while ((el = el.parentNode) && el != body && el != doc) {
     left += el.offsetLeft;
   }
-  // console.log(el.offsetLeft, el.nodeName);
-  // return el.offsetLeft + (el.nodeName != 'BODY' ? getLeft(el.parentNode) : 0);
   return left + body.offsetLeft;
 }
 
@@ -247,12 +251,6 @@ function updatePlayhead() {
   playhead.style.width = (100 / (video.duration) * this.currentTime) + '%';
   currentTime.innerHTML = asTime(video.currentTime);
 }
-
-video.parentNode.addEventListener('keydown', function (event) {
-  if (event.which == 32) {
-    play.onclick();
-  }
-}, false);
 
 function initControls() {
   video.parentNode.tabIndex = 0;
