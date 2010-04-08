@@ -32,10 +32,11 @@ body {
 }
 
 .videochrome .play {
+  color: #fff;
+  border: 0;
   cursor: pointer;
   width: 30px;
   font-size: 17px;
-  padding-left: 8px;
   line-height: 30px;
   height: 30px;
   display: block;
@@ -128,14 +129,14 @@ body {
 }
 
 .videochrome .controls .scrub div {
-  -webkit-transition: width linear 250ms;
-  -moz-transition: width linear 250ms;
-  -o-transition: width linear 250ms;
-  transition: width linear 250ms;
+  -webkit-transition: width linear 100ms;
+  -moz-transition: width linear 100ms;
+  -o-transition: width linear 100ms;
+  transition: width linear 100ms;
 }
 
 .videochrome .controls .scrub div.scrubbing {
-  -webkit-transition: none;
+  -webkit-transition: none ;
   -moz-transition: none;
   -o-transition: width none;
   transition: none;
@@ -146,7 +147,7 @@ body {
   <div class="videochrome">
     <div class="controls">
       <div class="scrub">
-        <div class="play">&#x25BA;</div>
+        <input type="button" class="play" value="&#x25BA;" />
         <div class="duration">0:00</div>
         <div class="loaded"><div class="buffer"><div class="playhead"><span>0:00</span></div></div></div>
       </div>
@@ -158,10 +159,10 @@ body {
       Please download the video in <a href="leverage-a-synergy.ogv">Ogg</a> or <a href="leverage-a-synergy.mp4">mp4</a> format.
     </video>
   </div>
-  <p id="speed">
+  <!-- <p id="speed">
     <a href="#slower">slower</a>
     <a href="#faster">faster</a>
-  </p>
+  </p> -->
 <script>
 var video = document.getElementsByTagName('video')[0],
     scrubbing = false,
@@ -185,9 +186,9 @@ video.addEventListener('canplay', function () {
   initControls();
 }, false);
 
-document.querySelector('#speed').addEventListener('click', function (event) {
-  video.playbackRate += event.target.hash == '#slower' ? -0.2 : 0.2;
-}, false);
+// document.querySelector('#speed').addEventListener('click', function (event) {
+//   video.playbackRate += event.target.hash == '#slower' ? -0.2 : 0.2;
+// }, false);
 
 video.addEventListener('progress', updateSeekable, false);
 video.addEventListener('durationchange', updateSeekable, false);
@@ -281,17 +282,38 @@ function initControls() {
       
       video.parentNode.className = video.parentNode.className.replace(/ paused/, '');
       video.play();
-      this.innerHTML = '▌▌';
+      this.value = '▌▌';
       this.setAttribute('paused', true);
     } else {
       video.pause();
       video.parentNode.className += ' paused';
       this.removeAttribute('paused');
-      this.innerHTML = '►';
+      this.value = '►';
     }
   };
   
   updateSeekable.call(video);
+}
+
+function speedup(video, direction) {
+  if (direction == undefined) direction = 1; // or -1 for reverse
+  
+  if (video.playbackRate != undefined) {
+    video.playbackRate = direction == 1 ? 2 : -2;
+  } else { // do it manually
+    video.setAttribute('data-playbackRate', setInterval((function () {
+      video.currentTime += direction; // 10 second jump
+      return arguments.callee;
+    })(), 500));
+  }
+}
+
+function playnormal(video) {  
+  if (video.playbackRate != undefined) {
+    video.playbackRate = 1;
+  } else { // do it manually
+    clearInterval(video.getAttribute('data-playbackRate'));
+  }
 }
 </script>
 </body>
