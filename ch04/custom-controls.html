@@ -178,14 +178,7 @@ var video = document.getElementsByTagName('video')[0],
 
 video.removeAttribute('controls');
 
-video.addEventListener('canplay', function () {
-  this.height = this.videoHeight;
-  this.width = this.videoWidth;
-  this.parentNode.style.height = this.videoHeight + 'px';
-  this.parentNode.style.width = this.videoWidth + 'px';
-  scrubWidth = parseFloat(getComputedStyle(buffer.parentNode, null).width);
-  initControls();
-}, false);
+video.addEventListener('canplay', canplay, false);
 
 video.addEventListener('play', playEvent, false);
 video.addEventListener('pause', pausedEvent, false);
@@ -231,6 +224,15 @@ document.addEventListener('mousemove', function (event) {
     return false;
   }
 }, false);
+
+function canplay() {
+  this.height = this.videoHeight;
+  this.width = this.videoWidth;
+  this.parentNode.style.height = this.videoHeight + 'px';
+  this.parentNode.style.width = this.videoWidth + 'px';
+  scrubWidth = parseFloat(getComputedStyle(buffer.parentNode, null).width);
+  initControls();
+}
 
 function playEvent() {
   this.parentNode.className = this.parentNode.className.replace(/ paused/, '');
@@ -319,6 +321,11 @@ function playnormal(video) {
   } else { // do it manually
     clearInterval(video.getAttribute('data-playbackRate'));
   }
+}
+
+if (video.readyState == 2) {
+  // the video is actually ready
+  canplay.call(video);
 }
 </script>
 </body>
