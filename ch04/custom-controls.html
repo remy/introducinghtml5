@@ -274,7 +274,6 @@ function getLeft(el) {
 }
 
 function updateSeekable(event) {
-  console.log(event.type, video.duration);
   buffer.style.width = (100 / (video.duration || 1) * (this.seekable && this.seekable.length ? this.seekable.end() : this.duration)) + '%';
   duration.innerHTML = asTime(video.duration);
 }
