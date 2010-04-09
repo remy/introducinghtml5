@@ -20,7 +20,8 @@ body {
 
 .videochrome .controls {
   position: absolute;
-  top: 0;
+/*  top: 0;*/
+  height: 20px;
   bottom: 0;
   left: 0;
   right: 0;
@@ -88,13 +89,13 @@ body {
   border-radius: 10px;
 }
 
-.videochrome .controls:hover,
+.videochrome:hover .controls,
 .videochrome.paused .controls {
   opacity: 1;
 }
 
 .videochrome.paused .controls .scrub,
-.videochrome .controls:hover .scrub {
+.videochrome:hover .scrub {
   bottom: 0;
 }
 
@@ -144,7 +145,7 @@ body {
 </style>
 </head>
 <body>
-  <div class="videochrome">
+  <div class="videochrome paused">
     <div class="controls">
       <div class="scrub">
         <input type="button" class="play" value="&#x25BA;" />
@@ -186,9 +187,11 @@ video.addEventListener('canplay', function () {
   initControls();
 }, false);
 
-// document.querySelector('#speed').addEventListener('click', function (event) {
-//   video.playbackRate += event.target.hash == '#slower' ? -0.2 : 0.2;
-// }, false);
+video.addEventListener('play', playEvent, false);
+video.addEventListener('pause', pausedEvent, false);
+video.addEventListener('ended', function () {
+  this.pause();
+}, false);
 
 video.addEventListener('progress', updateSeekable, false);
 video.addEventListener('durationchange', updateSeekable, false);
@@ -204,7 +207,7 @@ wrapper.addEventListener('keydown', function (event) {
   }
 }, false);
 
-buffer.addEventListener('click', function () {
+buffer.addEventListener('click', function (event) {
   scrubbing = true;
   movePlayHead(event);
   scrubbing = false;
@@ -228,6 +231,18 @@ document.addEventListener('mousemove', function (event) {
     return false;
   }
 }, false);
+
+function playEvent() {
+  this.parentNode.className = this.parentNode.className.replace(/ paused/, '');
+  play.value = '▌▌';
+  play.setAttribute('paused', true);
+}
+
+function pausedEvent() {
+  this.parentNode.className += ' paused';
+  play.removeAttribute('paused');
+  play.value = '►';
+}
 
 function asTime(t) {
   t = Math.round(t);
@@ -258,7 +273,8 @@ function getLeft(el) {
   return left + body.offsetLeft;
 }
 
-function updateSeekable() {
+function updateSeekable(event) {
+  console.log(event.type, video.duration);
   buffer.style.width = (100 / (video.duration || 1) * (this.seekable && this.seekable.length ? this.seekable.end() : this.duration)) + '%';
   duration.innerHTML = asTime(video.duration);
 }
@@ -274,22 +290,12 @@ function initControls() {
   video.parentNode.tabIndex = 0;
   duration.innerHTML = asTime(video.duration);
   play.removeAttribute('disabled');
-  play.onclick = function () {    
-    if (video.paused || video.ended) {
-      if (video.ended) {
-        video.currentTime = 0;
-      }
-      
-      video.parentNode.className = video.parentNode.className.replace(/ paused/, '');
-      video.play();
-      this.value = '▌▌';
-      this.setAttribute('paused', true);
-    } else {
-      video.pause();
-      video.parentNode.className += ' paused';
-      this.removeAttribute('paused');
-      this.value = '►';
+  play.onclick = function () {
+    if (video.ended) {
+      video.currentTime = 0;
     }
+    
+    video[video.paused ? 'play' : 'pause']();
   };
   
   updateSeekable.call(video);
