@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset=utf-8 />
+<title>Simple Drag and Drop</title>
+<style>
+body { font-family: helvetica; margin: 20px; }
+#drop { min-height: 100px; width: 300px; border: 3px dashed #ccc; padding: 10px; background: #eee; overflow: hidden; }
+#drop:hover, #drop.over { background: #fff; }
+p { margin: 3px 0; }
+img { margin: 10px; }
+</style>
+</head>
+<body>
+  <p>Drag the images below over the grey drop zone to capture their <em>drop data</em>: the <code>src</code>.</p>
+  <img src="rem.jpg" alt="@rem" />
+  <img src="brucel.jpg" alt="@brucel" />
+  <div id="drop"></div>
+<script>
+
+var drop = document.getElementById('drop');
+
+// Tells the browser that we *can* drop on this target
+drop.ondragover = function (event) {
+  this.className = 'over';
+  return false;
+};
+
+drop.ondrop = function (event) {
+  event = event || window.event;
+  this.className = '';
+  this.innerHTML += '<p>' + event.dataTransfer.getData('Text') + '</p>';
+};
+
+</script>
+</body>
+</html>
