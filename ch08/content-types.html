@@ -14,15 +14,24 @@ img { margin: 10px; border: 5px solid #000; }
 </head>
 <body>
   <p>Drag the images below over the grey drop zone to capture their <em>drop data</em>: the <code>src</code>.</p>
-  <img src="rem.jpg" alt="@rem" />
-  <img src="brucel.jpg" alt="@brucel" />
+  <div id="dragables">
+    <img src="rem.jpg" alt="Remy Sharp" data-screen_name="@rem" />
+    <img src="brucel.jpg" alt="Bruce Lawson" data-screen_name="@brucel" />
+  </div>
   <div id="drop"></div>
 <script>
 
 var drop = document.getElementById('drop');
 
+[].slice.call(document.getElementsByTagName('img')).forEach(function (img) {
+  img.ondragstart = function (event) {
+    event = event || window.event;
+    event.dataTransfer.setData('screen_name', this.getAttribute('data-screen_name'));
+  };
+});
+
 // Tells the browser that we *can* drop on this target
-drop.ondragenter = function () { event.dataTransfer.dropEffect = 'move'; return false; };
+// drop.ondragenter = function () { event.dataTransfer.dropEffect = 'move'; return false; };
 drop.ondragover = function (event) { event.dataTransfer.dropEffect = 'move'; return false; };
 //   this.className = 'over';
 //   return false;
@@ -30,9 +39,10 @@ drop.ondragover = function (event) { event.dataTransfer.dropEffect = 'move'; ret
 
 drop.ondrop = function (event) {
   event = event || window.event;
-  event.
-  this.className = '';
-  this.innerHTML += '<p>' + event.dataTransfer.getData('Text') + '</p>';
+
+  // this.className = '';
+  // console.log(event);
+  this.innerHTML += '<p>' + event.dataTransfer.getData('screen_name') + '</p>';
 };
 
 </script>
