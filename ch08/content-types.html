@@ -36,7 +36,6 @@ var imgs = document.getElementsByTagName('img'), i = imgs.length;
 while (i--) {
   imgs[i].ondragstart = function (event) {
     event = event || window.event;
-    console.log('ok');
     event.dataTransfer.setData('screen_name', this.getAttribute('data-screen_name'));
     event.dataTransfer.setData('text/src', this.src);
     event.dataTransfer.setData('text/plain', 'This is the screen name for ' + this.getAttribute('data-screen_name') + ', whose image can be found here: ' + this.src);
