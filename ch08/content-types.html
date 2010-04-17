@@ -6,8 +6,7 @@
 <style>
 html { height: 100%; }
 body { font-family: helvetica; padding: 20px; color: #fff; background: #575757; background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#575757), to(#272727)); }
-#drop { min-height: 100px; border: 5px dashed #B9B9B9; padding: 10px; background: #171717; overflow: hidden; -webkit-border-radius: 10px; }
-#drop:hover, #drop.over { background: #4F4F4F; color: #fff; border-color: #CFCFCF;t }
+.drop { margin-bottom: 10px; min-height: 100px; border: 5px dashed #B9B9B9; padding: 10px; background: #171717; overflow: hidden; -webkit-border-radius: 10px; -moz-border-radius: 10px; }
 p { margin: 3px 0; }
 img { margin: 10px; border: 5px solid #000; }
 </style>
@@ -18,32 +17,67 @@ img { margin: 10px; border: 5px solid #000; }
     <img src="rem.jpg" alt="Remy Sharp" data-screen_name="@rem" />
     <img src="brucel.jpg" alt="Bruce Lawson" data-screen_name="@brucel" />
   </div>
-  <div id="drop"></div>
+  <div class="drop" id="dropnames" data-accept="screen_name">
+    <p>I'll show you Twitter screen names</p>
+  </div>
+  <div class="drop" id="dropimages" data-accept="text/plain">
+    <p>I'll copy text</p>
+  </div>
+  <div class="drop" id="dropimages" data-accept="images">
+    <p>I accept png images from your desktop (or somewhere on your computer) - but I only work in Firefox</p>
+  </div>
 <script>
 
-var drop = document.getElementById('drop');
+function cancelEvent(event) {
+  return false;
+}
 
-[].slice.call(document.getElementsByTagName('img')).forEach(function (img) {
-  img.ondragstart = function (event) {
+var imgs = document.getElementsByTagName('img'), i = imgs.length;
+while (i--) {
+  imgs[i].ondragstart = function (event) {
     event = event || window.event;
+    console.log('ok');
     event.dataTransfer.setData('screen_name', this.getAttribute('data-screen_name'));
+    event.dataTransfer.setData('text/src', this.src);
+    event.dataTransfer.setData('text/plain', 'This is the screen name for ' + this.getAttribute('data-screen_name') + ', whose image can be found here: ' + this.src);
   };
-});
+}
 
-// Tells the browser that we *can* drop on this target
-// drop.ondragenter = function () { event.dataTransfer.dropEffect = 'move'; return false; };
-drop.ondragover = function (event) { event.dataTransfer.dropEffect = 'move'; return false; };
-//   this.className = 'over';
-//   return false;
-// };
+var drop = document.querySelectorAll('.drop'),
+    j = drop.length;
 
-drop.ondrop = function (event) {
-  event = event || window.event;
-
-  // this.className = '';
-  // console.log(event);
-  this.innerHTML += '<p>' + event.dataTransfer.getData('screen_name') + '</p>';
-};
+while (j--) {
+  // drop[j].ondragenter = cancelEvent;
+  drop[j].ondragover = function (event) {
+    event.dataTransfer.dropEffect = 'move';
+    event.preventDefault();
+    return false;
+  };
+  drop[j].ondrop = function (event) {
+    event = event || window.event;
+    var accept = this.getAttribute('data-accept');
+    var data = event.dataTransfer.getData(accept);
+    console.log(accept, data);
+    console.log([].slice.call(event.dataTransfer.types, 0));
+    if (data) {
+      if (accept == 'src') {
+        this.innerHTML += '<img src="' + data + '">';
+      } else if (accept == 'screen_name') {
+        this.innerHTML += '<p>' + data + '</p>';
+      } else {
+        this.innerHTML += '<p>' + data + '</p>';
+      }
+    } else if (accept == 'images' && event.dataTransfer.files) {
+      console.log('ok1');
+      var k = 0, l = event.dataTransfer.files.length;
+      for (; k < l; k++) {
+        console.log('ok2: ', event.dataTransfer.files.item(k));
+        this.innerHTML += '<img height="75" width="75" src="' + event.dataTransfer.files.item(k).getAsDataURL() + '">';
+      }
+    }
+    return false;
+  }
+}
 
 </script>
 </body>

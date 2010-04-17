@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset=utf-8 />
+<title>Custom Drag and Drop Icon</title>
+<style>
+html { height: 100%; }
+body { font-family: helvetica; padding: 20px; color: #fff; background: #575757; background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#575757), to(#272727)); }
+#drop { min-height: 100px; border: 5px dashed #B9B9B9; padding: 10px; background: #171717; overflow: hidden; -webkit-border-radius: 10px; }
+p { margin: 3px 0; }
+[draggable] { -khtml-user-drag: element; }
+div[draggable] { margin: 10px; border: 5px solid #000; height: 73px; width: 73px; display: inline-block; }
+
+#rem { background: url(rem.jpg) no-repeat; }
+#brucel { background: url(brucel.jpg) no-repeat; }
+</style>
+</head>
+<body>
+  <p>Drag our avatars to see a custom drag and drop icon against the mouse.</p>
+  <div id="rem" data-screen_name="rem" draggable></div>
+  <div id="brucel" data-screen_name="brucel" draggable></div>
+  <div id="drop"></div>
+<script>
+
+var drop = document.getElementById('drop'),
+    blocks = document.getElementsByTagName('div'),
+    i = blocks.length,
+    dragIcon = document.createElement('img');
+
+// set the drag icon to the twitter logo
+dragIcon.src = 'http://img.tweetimag.es/i/twitter_m';
+
+while (i--) {
+  // only do the divs with the draggable attribut
+  if (blocks[i].getAttribute('draggable') != undefined) {
+    blocks[i].ondragstart = function (event) {
+      event.dataTransfer.setDragImage(dragIcon, -10, -10);
+      event.dataTransfer.setData('screen_name', '@' + this.getAttribute('data-screen_name'));
+    };
+  }
+}
+
+// Tells the browser that we *can* drop on this target
+function cancelEvent() { return false; }
+drop.ondragenter = cancelEvent;
+drop.ondragover = cancelEvent;
+
+drop.ondrop = function (event) {
+  event = event || window.event;
+  event.preventDefault && event.preventDefault();
+  this.innerHTML += '<p>' + event.dataTransfer.getData('screen_name') + '</p>';
+  return false;
+};
+
+</script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset=utf-8 />
+<title>Interrogate content types</title>
+<style>
+html { height: 100%; }
+body { font-family: helvetica; padding: 20px; color: #fff; background: #575757; background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#575757), to(#272727)); }
+#drop { margin-bottom: 10px; min-height: 100px; border: 5px dashed #B9B9B9; padding: 10px; padding-left: 30px; background: #171717; overflow: hidden; -webkit-border-radius: 10px; -moz-border-radius: 10px; }
+p { margin: 3px 0; }
+</style>
+</head>
+<body>
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+<ol id="drop"></ol>
+<script>
+function cancelEvent() { return false; };
+var drop = document.getElementById('drop');
+drop.ondragover = cancelEvent;
+drop.ondragenter = cancelEvent;
+drop.ondrop = function (event) {
+  event = event || window.event;
+  
+  this.innerHTML = '';
+  if (false) {
+    dump(event.dataTransfer, this);
+    return false;
+  }
+  
+  var types = event.dataTransfer.types, i = types.length;
+  this.innerHTML = '';
+  while (i--) {
+    this.innerHTML += '<li><strong>' + types[i] + '</strong><br />' + event.dataTransfer.getData(types[i]) + '</li>';
+  }
+  return false;
+};
+
+function dump(o, t) {
+  for (var k in o) {
+    try {
+      t.innerHTML += '<li><strong>' + k + '</strong><br />' + o[k] + '</li>';      
+    } catch (e) {
+      t.innerHTML += '<li><strong>Protected: ' + k + '</strong></li>';
+    }
+  }
+}
+</script>
+</body>
+</html>
