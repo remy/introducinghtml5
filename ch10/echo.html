@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset=utf-8 />
+<title>Worker echo</title>
+<style>
+h2 { margin: 0; }
+body, input, textarea { font-family: "helvetica neue", arial, helvetica; font-size: 18px; padding: 2px; }
+#output { margin: 20px 0; padding: 10px; border: 5px solid #ccc; font-family: monospace; list-style: none; }
+#output li { margin: 5px 0; }
+#output li.prompt:before {
+  content: '> ';
+  color: #3583FC;
+  font-size: 18px;
+  font-weight: bold;
+}
+.error { color: #B32200; }
+</style>
+</head>
+<body>
+<form>
+  <input type="text" placeholder="Execute JavaScript in the worker" id="exec" size="40" />
+  <input type="submit" value="run" /> 
+</form>
+<!-- the output element would be perfect here -->
+<h2>Worker output:</h2>
+<pre><ul id="output"></ul></pre>
+<script>
+var exec = document.getElementById('exec'),
+    form = exec.form,
+    output = document.getElementById('output'),
+    worker = new Worker('echo.js');
+
+worker.onerror = function (event) {
+  output.innerHTML = '<li class="error">' + event.data + '</li>' + output.innerHTML;
+};
+
+worker.onmessage = function (event) {
+  var response = JSON.parse(event.data);
+  if (window[response.run] != undefined) {
+    window[response.run](JSON.parse(response.raw));
+  } else {
+    // console.log(response.raw);
+    console.log(JSON.parse(response.raw));
+    output.innerHTML = response.html + output.innerHTML;
+  }
+};
+
+function log(o) {
+  console.log(o);
+}
+
+form.onsubmit = function () {
+  worker.postMessage(exec.value);
+  exec.select();
+  return false;
+};
+</script>
+</body>
+</html>
