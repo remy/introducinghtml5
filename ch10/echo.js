@@ -34,6 +34,8 @@ function process(string) {
   
   if (methods[method] != undefined) {
     string = methods[method](string.substr((method+':').length));
+  } else {
+    eval('string = ' + string);
   }
   
   return JSON.stringify(string);
