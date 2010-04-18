@@ -1,48 +1,77 @@
-var worker = this;
+(function (worker) {
 
-onerror = function () {
-  postMessage([].slice.call(arguments, 0).join(', '));
-};
+worker.onmessage = function (event) {
+  var rawoutput = process(event.data);
 
-onmessage = function (event) {
-  var message = '<li class="prompt"><strong>' + event.data + '</strong></li>',
-      rawoutput = process(event.data);
-      
-  postMessage(JSON.stringify({
-    html: message + '<li>' + JSON.parse(rawoutput) + '</li>',
-    raw: rawoutput
+  worker.postMessage(stringify({
+    html: '<li class="prompt"><strong>' + event.data + '</strong><br />'  + stringify(rawoutput).replace(/[<>]/g, function (m) { return {'>':'&gt;'}[m]||'&lt;';}) + '</li>'
+    // raw: rawoutput
   }));
 };
 
-function process(string) {
-  var method = string.split(':')[0],
-      methods = {
-        run: function (s) {
-          try {
-            return worker[s]();
-          } catch (e) {
-            return 'error calling "' + s + '": ' + e.description;
-          }
-        },
-        'typeof': function (s) {
-          return typeof worker[s];
-        },
-        dir: function (s) {
-          return worker[s];
-        }
-      };
+// custom because I want to be able to introspect private objects and functions
+function stringify(o, simple) {
+  var json = '', i, type = ({}).toString.call(o), parts = [];
   
-  if (methods[method] != undefined) {
-    string = methods[method](string.substr((method+':').length));
+  if (type == '[object String]') {
+    json = '"' + o.replace(/"/g, '\\"') + '"';
+  } else if (type == '[object Array]') {
+    json = '[';
+    for (i = 0; i < o.length; i++) {
+      parts.push(stringify(o[i]));
+    }
+    json += parts.join(', ') + ']';
+    json;
+  } else if (type == '[object Object]') {
+    json = '{';
+    for (i in o) {
+      parts.push(stringify(i) + ': ' + stringify(o[i]));
+    }
+    json += parts.join(', ') + '}';
+  } else if (type == '[object Number]') {
+    json = o+'';
+  } else if (type == '[object Boolean]') {
+    json = o ? 'true' : 'false';
+  } else if (type == '[object Function]') {
+    json = o.toString();
+  } else if (o == null) {
+    json = 'null';
+  } else if (o == undefined) {
+    json = 'undefined';
+  } else if (simple == undefined) {
+    json = o.toString() + '{\n';
+    for (i in o) {
+      parts.push(i + ': ' + stringify(o[i], true));
+    }
+    json += parts.join(',\n') + '\n}';
   } else {
-    eval('string = ' + string);
+    json = '"' + o + '"';
   }
-  
-  return JSON.stringify(string);
+  return json.replace(/\n/g, '\\n');
+}
+
+function process(string) {
+  try {
+    eval('string = ' + string);
+  } catch (e) {
+    string = e.message;
+  }
+
+  return string;
 }
 
 var console = {
-  log: function () {
-    postMessage(JSON.stringify({ run: 'log', raw: JSON.stringify([].slice.call(arguments, 0)) }));
+  log: function (s) {
+    return s;
+  },
+  dir: function (o) {
+    var result = [o.toString() + '{'];
+    for (var k in o) {
+      result.push('"' + k + '": "' + o[k] + '"');
+    }
+    result.push('}');
+    return result.join("\n");
   }
 };
+  
+})(this);
