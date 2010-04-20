@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>pattern fill with video</title>
+<style>html,body { height: 100%;} body { margin: 0; body: 0; } canvas { position: absolute; top: 0; left: 0; width: 100%; bottom: 0; height: 100%; } video { display: none; }</style>
+<body>
+<canvas id="canvas"></canvas>
+<video id="video">
+  <source src="leverage-a-synergy.ogv" type="video/ogg" />
+  <source src="leverage-a-synergy.ogv" type="video/mp4" />
+</video>
+<script>
+var canvas = document.getElementById('canvas'), 
+    video = document.getElementById('video'),
+    ctx = canvas.getContext ? canvas.getContext('2d') : null;
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+video.onloadeddata = function () {
+  this.play();
+};
+
+console.log(ctx.createPattern(video, 'repeat'));
+
+video.addEventListener('timeupdate', function () {
+  if (ctx) {
+    // ctx.fillStyle = ctx.createPattern(video, 'repeat');
+    // ctx.fillRect(0, 0, canvas.height, canvas.height);
+  } 
+}, false);
+
+
+</script>
+</body>
+</head>
+</html>
