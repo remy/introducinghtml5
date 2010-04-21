@@ -52,7 +52,7 @@ video.addEventListener('timeupdate', function () {
     mctx.drawImage(video, this.width - shortestEdge, this.height - shortestEdge, shortestEdge, shortestEdge, 0, 0, mirror.width, mirror.height);
     
     pctx.fillStyle = pctx.createPattern(mirror, 'repeat');
-    pctx.fillRect(0, 0, pattern.height, pattern.height);
+    pctx.fillRect(0, 0, pattern.width, pattern.height);
   } 
 }, false);
 
