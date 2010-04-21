@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>pattern fill with video</title>
+<style>
+html,body { height: 100%;} 
+body { margin: 0; body: 0; overflow: hidden; } 
+#pattern { position: absolute; top: 0; left: 0; width: 100%; bottom: 0; height: 100%; } 
+</style>
+</head>
+<body>
+<canvas id="pattern"></canvas>
+<script>
+var pattern = document.getElementById('pattern'), 
+    img = document.createElement('img'),
+    ctx = pattern.getContext ? pattern.getContext('2d') : null;
+
+// stretch
+pattern.width = window.innerWidth;
+pattern.height = window.innerHeight;
+
+img.onload = function () {
+  ctx.fillStyle = ctx.createPattern(img, 'repeat');
+  ctx.fillRect(0, 0, pattern.width, pattern.height);
+};
+img.src = 'remysharp_avatar.jpg';
+
+</script>
+</body>
+</html>
