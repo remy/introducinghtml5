@@ -5,6 +5,22 @@
 <style>html,body { height: 100%;} body { margin: 0; body: 0; } #pattern { position: absolute; top: 0; left: 0; width: 100%; bottom: 0; height: 100%; } video, img, #mirror { display: none; }</style>
 </head>
 <body>
+<!--
+  This example shows you how to use the createPattern filler. The spec
+  says that we should be able to drop a video source directly in to the
+  createPattern method, but most/all browsers don't support this yet 
+  (or I've done something wrong), so what I'm doing is this this:
+  
+  1. run a hidden video with @brucel
+  2. on timeupdate, draw the video in to a static canvas
+  3. use the static canvas as a source for createPattern
+  4. fill using the canvas based pattern
+  
+  Hey presto - you can never get enough @brucel.
+  
+  - Enjoy, @rem
+  
+-->
 <canvas id="pattern"></canvas>
 <canvas id="mirror" height="78" width="78"></canvas>
 <video id="video" autoplay loop>
