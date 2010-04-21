@@ -2,36 +2,48 @@
 <html>
 <head>
 <title>pattern fill with video</title>
-<style>html,body { height: 100%;} body { margin: 0; body: 0; } canvas { position: absolute; top: 0; left: 0; width: 100%; bottom: 0; height: 100%; } video { display: none; }</style>
+<style>html,body { height: 100%;} body { margin: 0; body: 0; } #pattern { position: absolute; top: 0; left: 0; width: 100%; bottom: 0; height: 100%; } video, img, #mirror { display: none; }</style>
+</head>
 <body>
-<canvas id="canvas"></canvas>
-<video id="video">
+<canvas id="pattern"></canvas>
+<canvas id="mirror" height="78" width="78"></canvas>
+<video id="video" autoplay loop>
   <source src="leverage-a-synergy.ogv" type="video/ogg" />
   <source src="leverage-a-synergy.ogv" type="video/mp4" />
 </video>
 <script>
-var canvas = document.getElementById('canvas'), 
+var pattern = document.getElementById('pattern'), 
+    mirror = document.getElementById('mirror'),
     video = document.getElementById('video'),
-    ctx = canvas.getContext ? canvas.getContext('2d') : null;
+    img = document.getElementById('img'),
+    pctx = pattern.getContext ? pattern.getContext('2d') : null,
+    mctx = mirror.getContext ? mirror.getContext('2d') : null;
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+pattern.width = window.innerWidth;
+pattern.height = window.innerHeight;
+// video.volume = 0;
+// ctx.fillStyle = ctx.createPattern(img, 'repeat');
+// ctx.fillRect(0, 0, canvas.height, canvas.height);
 
-video.onloadeddata = function () {
-  this.play();
-};
-
-console.log(ctx.createPattern(video, 'repeat'));
+video.addEventListener('loadeddata', function () {
+  this.height = this.videoHeight;
+  this.width = this.videoWidth;
+}, false);
 
 video.addEventListener('timeupdate', function () {
-  if (ctx) {
-    // ctx.fillStyle = ctx.createPattern(video, 'repeat');
-    // ctx.fillRect(0, 0, canvas.height, canvas.height);
+  if (pctx) {
+    // would be awesome to crop, but you get the picture
+    mctx.drawImage(video, 0, 0, video.width, video.height, 0, 0, mirror.width, mirror.height);
+    
+    pctx.fillStyle = pctx.createPattern(mirror, 'repeat');
+    pctx.fillRect(0, 0, pattern.height, pattern.height);
   } 
 }, false);
 
+pattern.addEventListener('click', function () {
+  video[video.paused ? 'play' : 'pause']();
+}, false);
 
 </script>
 </body>
-</head>
 </html>
