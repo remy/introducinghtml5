@@ -17,23 +17,23 @@ var pattern = document.getElementById('pattern'),
     video = document.getElementById('video'),
     img = document.getElementById('img'),
     pctx = pattern.getContext ? pattern.getContext('2d') : null,
-    mctx = mirror.getContext ? mirror.getContext('2d') : null;
+    mctx = mirror.getContext ? mirror.getContext('2d') : null,
+    shortestEdge = 0;
 
 pattern.width = window.innerWidth;
 pattern.height = window.innerHeight;
-// video.volume = 0;
-// ctx.fillStyle = ctx.createPattern(img, 'repeat');
-// ctx.fillRect(0, 0, canvas.height, canvas.height);
 
 video.addEventListener('loadeddata', function () {
   this.height = this.videoHeight;
   this.width = this.videoWidth;
+  
+  shortestEdge = this.height < this.width ? this.height : this.width;
 }, false);
 
 video.addEventListener('timeupdate', function () {
   if (pctx) {
     // would be awesome to crop, but you get the picture
-    mctx.drawImage(video, 0, 0, video.width, video.height, 0, 0, mirror.width, mirror.height);
+    mctx.drawImage(video, this.width - shortestEdge, this.height - shortestEdge, shortestEdge, shortestEdge, 0, 0, mirror.width, mirror.height);
     
     pctx.fillStyle = pctx.createPattern(mirror, 'repeat');
     pctx.fillRect(0, 0, pattern.height, pattern.height);
