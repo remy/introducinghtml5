@@ -29,9 +29,12 @@ var canvas = document.getElementById('banana'),
 
 canvas.width = window.innerWidth;
 
+video.addEventListener('play', function () {
+  video.currentTime = 49;
+}, false);
+
 video.addEventListener('loadeddata', function () {
   // video.volume = 0;
-  video.currentTime = 49;
   shortestEdge = video.videoHeight > video.videoWidth ? video.videoWidth : video.videoHeight;
   
 // return;
