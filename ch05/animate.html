@@ -3,24 +3,24 @@
 <head>
 <title>simple animation</title>
 <style>
-body { margin: 0; padding: 0; } 
+body { margin: 0; padding: 0; background: #000; } 
 canvas { margin: 0; display: block; }
 </style>
 </head>
 <body>
 <canvas height="300" width="600"></canvas>
 <script>
-var x = 150;
-var y = 150;
-var dx = 2;
-var dy = 4;
-var ctx = document.querySelector('canvas').getContext("2d");
-var copy;
-var WIDTH; 
-var HEIGHT;
-var ballImg;
-var ballSize = 50;
-var direction = -1
+var x = 150,
+    y = 150,
+    dx = 2,
+    dy = 4,
+    ctx = document.querySelector('canvas').getContext("2d"),
+    copy,
+    WIDTH, 
+    HEIGHT,
+    ballImg,
+    ballSize = 50,
+    direction = -1;
 
 function circle(x,y,r) {
   copy.clearRect(-ballSize, ballSize, ballSize*2, ballSize*2);
@@ -85,6 +85,7 @@ function draw() {
 }
 
 init();
+
 ctx.canvas.onclick = function () {
   ballImg.src = ballImg.src.indexOf('bruce-ball.png') !== -1 ? 'remy-ball.png' : 'bruce-ball.png';
 };
