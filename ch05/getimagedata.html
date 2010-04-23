@@ -15,9 +15,17 @@ var canvas = document.getElementById('canvas'),
     img = document.querySelector('img'),
     ctx = canvas.getContext('2d');
     
-ctx.drawImage(img, 0, 0);
-var pixels = ctx.getImageData(0, 0, img.width, img.height);
-console.log(pixels);
+// wait until the image has loaded
+window.onload = function () {
+  ctx.drawImage(img, 0, 0);
+  var pixels = ctx.getImageData(0, 0, img.width, img.height);
+  for (var i = 0; i < pixels.data.length; i += 4) {
+    for (var j = 0; j < 4; j++) {
+      pixels.data[i+j] = 255 - pixelsdata[i+j];
+    }
+  }
+  ctx.putImageData(pixels.data, 0, 0, img.width, img.height);
+};
 </script>
 </body>
 </html>
