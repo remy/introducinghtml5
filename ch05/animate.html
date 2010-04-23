@@ -20,10 +20,11 @@ var WIDTH;
 var HEIGHT;
 var ballImg;
 var ballSize = 50;
+var direction = -1
 
 function circle(x,y,r) {
   copy.clearRect(-ballSize, ballSize, ballSize*2, ballSize*2);
-  copy.rotate(Math.PI/180*-3);  
+  copy.rotate(Math.PI/180*3*direction);  
   copy.drawImage(ballImg, 0, 0, ballImg.width, ballImg.height, -ballSize, -ballSize, ballSize*2, ballSize*2);
   
   // copy the rotated source
@@ -76,6 +77,8 @@ function draw() {
     dx = -dx;
   if (y + dy > (HEIGHT-(ballSize*2)) || y + dy < 0)
     dy = -dy;
+
+  direction = dx < 0 ? -1 : 1;
 
   x += dx;
   y += dy;
