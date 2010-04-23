@@ -16,6 +16,8 @@ var canvas = document.getElementById('canvas'),
     
 // wait until the image has loaded
 img.onload = function () {
+  ctx.canvas.width = img.width;  
+  ctx.canvas.height = img.height;
   ctx.drawImage(img, 0, 0);
   var pixels = ctx.getImageData(0, 0, img.width, img.height);
   
