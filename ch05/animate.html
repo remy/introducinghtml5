@@ -14,7 +14,7 @@ var x = 150;
 var y = 150;
 var dx = 2;
 var dy = 4;
-var ctx;
+var ctx = document.querySelector('canvas').getContext("2d");
 var copy;
 var WIDTH; 
 var HEIGHT;
@@ -27,6 +27,7 @@ function circle(x,y,r) {
   copy.drawImage(ballImg, 0, 0, ballImg.width, ballImg.height, -ballSize, -ballSize, ballSize*2, ballSize*2);
   
   // copy the rotated source
+  ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
   ctx.drawImage(copy.canvas, x, y);
 }
 
@@ -44,6 +45,7 @@ function clear() {
 function init() {
   ballImg = document.createElement('img');
   ballImg.src = 'bruce-ball.png';
+  var timer = null;
   ballImg.onload = function () {
     var copycanvas = document.createElement('canvas');
     copycanvas.style.display = 'none';
@@ -53,16 +55,17 @@ function init() {
     copy = copycanvas.getContext('2d');
     copy.translate(ballSize, ballSize);
     
-    ctx = document.querySelector('canvas').getContext("2d");
     WIDTH = ctx.canvas.width = window.innerWidth;
     HEIGHT = ctx.canvas.height = window.innerHeight;
     
-    ctx.canvas.onclick = function () {
-      ballImg.src = ballImg.src.indexOf('bruce-ball.png') !== -1 ? 'remy-ball.png' : 'bruce-ball.png';
-    };
-    
-    return setInterval(draw, 13);
+    clearInterval(timer);
+    timer = setInterval(draw, 13);
   }
+}
+
+window.onresize = function () {
+  WIDTH = ctx.canvas.width = window.innerWidth;
+  HEIGHT = ctx.canvas.height = window.innerHeight;  
 }
 
 function draw() {
@@ -79,6 +82,10 @@ function draw() {
 }
 
 init();
+ctx.canvas.onclick = function () {
+  ballImg.src = ballImg.src.indexOf('bruce-ball.png') !== -1 ? 'remy-ball.png' : 'bruce-ball.png';
+};
+
 
 </script>
 </body>
