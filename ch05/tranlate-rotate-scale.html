@@ -35,9 +35,9 @@ img.onload = function () {
       ctx.save();
 
       angle += inc;
-      ctx.rotate((Math.PI/180)*angle);
+      ctx.rotate(Math.PI/180*angle);
       ctx.scale(1+(angle/10), 1+(angle/10));
-      ctx.translate(-pattern.width * ((Math.PI/180)*angle), -pattern.height * ((Math.PI/180)*angle));
+      ctx.translate(-pattern.width * (Math.PI/180*angle), -pattern.height * (Math.PI/180*angle));
 
       ctx.fillRect(0, 0, pattern.width, pattern.height);
     }, 100);

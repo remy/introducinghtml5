@@ -25,35 +25,40 @@ var canvas = document.getElementById('banana'),
     video = document.getElementById('video'),
     ctx = canvas.getContext('2d')
     shortestEdge = 0,
+    size = 78,
     start = 49;
 
-canvas.width = window.innerWidth;
 
-video.addEventListener('play', function () {
-  video.currentTime = 49;
-}, false);
+// dirty hack to kick start the player
+var jumpTimer = setInterval(function () {
+  try {
+    video.currentTime = start;
+    clearInterval(jumpTimer);
+    video.play();    
+  } catch (e) {}
+}, 100);
 
 video.addEventListener('loadeddata', function () {
-  // video.volume = 0;
+  canvas.width = window.innerWidth;
+  video.volume = 0;
   shortestEdge = video.videoHeight > video.videoWidth ? video.videoWidth : video.videoHeight;
   
-// return;
   window.timer = setInterval(function () {
     var i = 0, w = canvas.width;
-    for (; i < w; i += 78) {
+    for (; i < w; i += size) {
       ctx.drawImage(
         video, 
-        video.videoWidth - shortestEdge, 
-        video.videoHeight - shortestEdge, 
+        (video.videoWidth - shortestEdge)/2, 
+        (video.videoHeight - shortestEdge)/2, 
         shortestEdge, 
         shortestEdge, 
         i,
         0,
-        78, 
-        78
+        size, 
+        size
       );      
     }
-  }, 13);
+  }, 25); // 67 is approximately 15fps
 }, false);
 
 video.addEventListener('timeupdate', function () {
