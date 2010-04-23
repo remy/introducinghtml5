@@ -8,11 +8,10 @@ canvas { margin: 30px auto 0; display: block; }
 </style>
 </head>
 <body>
-<canvas id="canvas"></canvas>
+<canvas></canvas>
 <script>
-var canvas = document.getElementById('canvas'), 
-    img = document.createElement('img'),
-    ctx = canvas.getContext('2d');
+var ctx = document.querySelector('canvas').getContext('2d'), 
+    img = document.createElement('img');
     
 // wait until the image has loaded
 img.onload = function () {
@@ -25,6 +24,7 @@ img.onload = function () {
     pixels.data[i+0] = 255 - pixels.data[i+0];
     pixels.data[i+1] = 255 - pixels.data[i+2];
     pixels.data[i+2] = 255 - pixels.data[i+1];
+    // i + 3 is the alpha channel which we don't need to touch
   }
   ctx.putImageData(pixels, 0, 0);
 };

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>simple animation</title>
+<style>
+body { margin: 0; padding: 0; } 
+canvas { margin: 0; display: block; }
+</style>
+</head>
+<body>
+<canvas height="300" width="600"></canvas>
+<script>
+var x = 150;
+var y = 150;
+var dx = 2;
+var dy = 4;
+var ctx;
+var copy;
+var WIDTH; 
+var HEIGHT;
+var ballImg;
+var ballSize = 50;
+
+function circle(x,y,r) {
+  copy.clearRect(-ballSize, ballSize, ballSize*2, ballSize*2);
+  copy.rotate(Math.PI/180*-3);  
+  copy.drawImage(ballImg, 0, 0, ballImg.width, ballImg.height, -ballSize, -ballSize, ballSize*2, ballSize*2);
+  
+  // copy the rotated source
+  ctx.drawImage(copy.canvas, x, y);
+}
+
+function rect(x,y,w,h) {
+  ctx.beginPath();
+  ctx.rect(x,y,w,h);
+  ctx.closePath();
+  ctx.fill();
+}
+
+function clear() {
+  ctx.clearRect(0, 0, WIDTH, HEIGHT);
+}
+
+function init() {
+  ballImg = document.createElement('img');
+  ballImg.src = 'bruce-ball.png';
+  ballImg.onload = function () {
+    var copycanvas = document.createElement('canvas');
+    copycanvas.style.display = 'none';
+    document.body.appendChild(copycanvas);
+    copycanvas.height = ballSize*2;
+    copycanvas.width = ballSize*2;
+    copy = copycanvas.getContext('2d');
+    copy.translate(ballSize, ballSize);
+    
+    ctx = document.querySelector('canvas').getContext("2d");
+    WIDTH = ctx.canvas.width = window.innerWidth;
+    HEIGHT = ctx.canvas.height = window.innerHeight;
+    
+    ctx.canvas.onclick = function () {
+      ballImg.src = ballImg.src.indexOf('bruce-ball.png') !== -1 ? 'remy-ball.png' : 'bruce-ball.png';
+    };
+    
+    return setInterval(draw, 13);
+  }
+}
+
+function draw() {
+  clear();
+  circle(x, y);
+
+  if (x + dx > (WIDTH-(ballSize*2)) || x + dx < 0)
+    dx = -dx;
+  if (y + dy > (HEIGHT-(ballSize*2)) || y + dy < 0)
+    dy = -dy;
+
+  x += dx;
+  y += dy;
+}
+
+init();
+
+</script>
+</body>
+</html>
