@@ -1,37 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>getImageData with video</title>
+<title>getImageData to invert image colours</title>
 <style>
-/*html,body { height: 100%;} */
 body { margin: 0; body: 0; } 
-canvas { margin: 30px auto 0; width: 600px; display: block; }
-video, img { display: none; }
+canvas { margin: 30px auto 0; display: block; }
 </style>
 </head>
 <body>
-<canvas id="canvas" width="600" height="400"></canvas>
-<video id="video" height="300" width="500" loop autoplay>
-  <source src="leverage-a-synergy.ogv" type="video/ogg" />
-  <source src="leverage-a-synergy.mp4" type="video/mp4" />
-</video>
+<canvas id="canvas"></canvas>
+<img src="remysharp_avatar.jpg" />
 <script>
 var canvas = document.getElementById('canvas'), 
-    video = document.getElementById('video'),
-    copycanvas = canvas.cloneNode(true),
-    ctx = canvas.getContext('2d'),
-    copy = copycanvas.getContext('2d');
-
-video.addEventListener('loadeddata', function () {
-  video.volume = 0;
-
-  setInterval(function () {
-    copycanvas.drawImage(video, 0, 0);
-    var data = copycanvas.getImageData();
+    img = document.querySelector('img'),
+    ctx = canvas.getContext('2d');
     
-  }, 13);
-}, false);
-
+ctx.drawImage(img, 0, 0);
+var pixels = ctx.getImageData(0, 0, img.width, img.height);
+console.log(pixels);
 </script>
 </body>
 </html>
