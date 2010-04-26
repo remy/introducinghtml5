@@ -1,11 +1,10 @@
 (function (worker) {
 
 worker.onmessage = function (event) {
-  var rawoutput = process(event.data);
+  var rawoutput = exec(event.data);
 
   worker.postMessage(stringify({
-    html: '<li class="prompt"><strong>' + event.data + '</strong><br />'  + stringify(rawoutput).replace(/[<>]/g, function (m) { return {'>':'&gt;'}[m]||'&lt;';}) + '</li>'
-    // raw: rawoutput
+    html: '<li class="prompt"><strong>' + event.data + '</strong><br />'  + stringify(rawoutput).replace(/[<>&]/g, function (m) { return {'&':'&amp;','>':'&gt;','<':'&lt;'}[m];}) + '</li>'
   }));
 };
 
@@ -50,9 +49,9 @@ function stringify(o, simple) {
   return json.replace(/\n/g, '\\n');
 }
 
-function process(string) {
+function exec(string) {
   try {
-    eval('string = ' + string);
+    string = eval(string);
   } catch (e) {
     string = e.message;
   }

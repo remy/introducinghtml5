@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<title>Messaging API</title>
+<iframe src="http://jsbin.com/oqide4"></iframe>
+<script>
+window.onmessage = function (event) {
+  event = event || window.event;
+  console.log(event);
+};
+var t = document.getElementsByTagName('iframe')[0];
+t.contentWindow.postMessage('favourite instrument?', 'http://jsbin.com');
+
+</script>
