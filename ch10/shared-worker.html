@@ -1,10 +1,13 @@
 <!DOCTYPE HTML>
-<title>Shared workers: demo 1</title>
+<title>Shared workers: demo 3</title>
 <pre id="log">Log:</pre>
 <script>
-  var worker = new SharedWorker('test.js');
+  var worker = new SharedWorker('shared-worker.js');
   var log = document.getElementById('log');
-  worker.port.onmessage = function(e) { // note: not worker.onmessage!
+  worker.port.addEventListener('message', function(e) {
     log.textContent += '\n' + e.data;
-  }
+  }, false);
+  worker.port.start();
+  worker.port.postMessage('ping');
 </script>
+<iframe src="shared-worker-inner.html"></iframe>
