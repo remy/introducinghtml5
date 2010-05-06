@@ -148,7 +148,7 @@ body {
   <div class="videochrome paused">
     <div class="controls">
       <div class="scrub">
-        <input type="button" class="play" value="&#x25BA;" />
+        <button class="play" title="play">&#x25BA;</button>
         <div class="duration">0:00</div>
         <div class="loaded"><div class="buffer"><div class="playhead"><span>0:00</span></div></div></div>
       </div>
@@ -178,7 +178,7 @@ var video = document.getElementsByTagName('video')[0],
 
 video.removeAttribute('controls');
 
-video.addEventListener('canplay', canplay, false);
+video.addEventListener('loadeddata', canplay, false);
 
 video.addEventListener('play', playEvent, false);
 video.addEventListener('pause', pausedEvent, false);
@@ -208,7 +208,8 @@ buffer.addEventListener('click', function (event) {
 
 buffer.addEventListener('mousedown', function (event) {
   scrubbing = true;
-  playhead.className += ' scrubbing';    
+  playhead.className += ' scrubbing';   
+  event.preventDefault(); // prevents the text cursor 
 }, false);
 
 document.addEventListener('mouseup', function () {
@@ -236,14 +237,14 @@ function canplay() {
 
 function playEvent() {
   this.parentNode.className = this.parentNode.className.replace(/ paused/, '');
-  play.value = '▌▌';
+  play.innerHTML = '▌▌';
   play.setAttribute('paused', true);
 }
 
 function pausedEvent() {
   this.parentNode.className += ' paused';
   play.removeAttribute('paused');
-  play.value = '►';
+  play.innerHTML = '►';
 }
 
 function asTime(t) {
@@ -321,11 +322,6 @@ function playnormal(video) {
   } else { // do it manually
     clearInterval(video.getAttribute('data-playbackRate'));
   }
-}
-
-if (video.readyState == 2) {
-  // the video is actually ready
-  canplay.call(video);
 }
 </script>
 </body>

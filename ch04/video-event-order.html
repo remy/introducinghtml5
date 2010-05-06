@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset=utf-8 />
+<title>Video events</title>
+<style>
+body { font-family: sans-serif; }
+#debug { float: left; width: 300px; }
+</style>
+</head>
+<body>
+    <ol id="debug"></ol>
+  <video controls>
+    <source src="leverage-a-synergy.ogv" type="video/ogg" />
+    <source src="leverage-a-synergy.ogv" type="video/mp4" />
+    Your browser doesn't support video. 
+    Please download the video in <a href="leverage-a-synergy.ogv">Ogg</a> or <a href="leverage-a-synergy.mp4">mp4</a> format.
+  </video>
+  
+<script>
+var video = document.getElementsByTagName('video')[0],
+    events = 'loadstart progress suspend abort error emptied stalled play pause loadedmetada loadeddata waiting playing canplay canplaythrough seeking seeked timeupdate ended ratechange durationchange volumechange'.split(' '),
+    i = events.length,
+    debug = document.getElementById('debug');
+    
+while (i--) {
+  video.addEventListener(events[i], echo, false);
+}
+
+function echo(event) {
+  debug.innerHTML += '<li>' + event.type + '</li>';
+}
+</script>
+</body>
+</html>
