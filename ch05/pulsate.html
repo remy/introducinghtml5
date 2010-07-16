@@ -112,9 +112,9 @@
 			function draw(){
 				context.clearRect (0, 0, elem.width, elem.height);
 				for(i = 0; i < circles.length; i++){
-					context.beginPath();  
+          // context.beginPath();  
           // context.arc(circles[i].x, circles[i].y, circles[i].radius, 0, Math.PI*2, true); 
-          context.drawImage(faces[i%2], circles[i].x - (circles[i].radius/2), circles[i].y - (circles[i].radius/2), circles[i].radius, circles[i].radius);
+          context.drawImage(faces[i%2], circles[i].x - circles[i].radius, circles[i].y - circles[i].radius, circles[i].radius*2, circles[i].radius*2);
           // context.stroke();
 					
 					for(j = 0; j < circles.length; j++){
