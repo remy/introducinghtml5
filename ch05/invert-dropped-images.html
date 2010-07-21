@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Drop images and invert them</title>
+<style>
+body { margin: 0; body: 0; } 
+canvas { margin: 30px auto 0; display: block; }
+</style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<script>
+var canvas = document.getElementById('canvas'), 
+    img = document.createElement('img'),
+    ctx = canvas.getContext('2d');
+
+// TODO fancy demo that you can drop images *in* to invert them, and drop them *out* to save them
+
+// wait until the image has loaded
+img.onload = function () {
+  ctx.drawImage(img, 0, 0);
+  var pixels = ctx.getImageData(0, 0, img.width, img.height);
+  
+  for (var i = 0; i < pixels.data.length; i += 4) {
+    pixels.data[i+0] = 255 - pixels.data[i+0];
+    pixels.data[i+1] = 255 - pixels.data[i+2];
+    pixels.data[i+2] = 255 - pixels.data[i+1];
+  }
+  ctx.putImageData(pixels, 0, 0);
+};
+img.src = 'remysharp_avatar.jpg';
+</script>
+</body>
+</html>

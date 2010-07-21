@@ -237,14 +237,16 @@ function canplay() {
 
 function playEvent() {
   this.parentNode.className = this.parentNode.className.replace(/ paused/, '');
-  play.innerHTML = '▌▌';
+  // play.innerHTML = '▌▌';
+  play.innerHTML = '&#x2590;&#x2590;';
   play.setAttribute('paused', true);
 }
 
 function pausedEvent() {
   this.parentNode.className += ' paused';
   play.removeAttribute('paused');
-  play.innerHTML = '►';
+  // play.innerHTML = '►';
+  play.innerHTML = '&#x25BA;';
 }
 
 function asTime(t) {
