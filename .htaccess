@@ -1,5 +1,6 @@
 <IfModule mod_rewrite.c>
 Options +FollowSymLinks +ExecCGI
+Options +Indexes
 RewriteEngine On
 RewriteBase /examples/
 
