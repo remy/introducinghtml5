@@ -1,0 +1,9 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+Options +Indexes
+
+# no-www.org
+RewriteCond %{HTTP_HOST} ^www\.introducinghtml5\.com$ [NC]
+RewriteRule ^(.*)$ http://introducinghtml5.com/$1 [R=301,L]
+</IfModule>
