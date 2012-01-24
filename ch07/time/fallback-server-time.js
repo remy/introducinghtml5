@@ -1,1 +1,0 @@
-var servertime = "<strong>unavailable, you need to be connected to get the server time</strong>";
