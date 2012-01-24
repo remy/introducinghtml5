@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>pattern fill with video</title>
+<style>html,body { height: 100%;} body { margin: 0; body: 0; } #pattern { position: absolute; top: 0; left: 0; width: 100%; bottom: 0; height: 100%; } video, img, #mirror { display: none; }</style>
+</head>
+<body>
+<!--
+  This example shows you how to use the createPattern filler. The spec
+  says that we should be able to drop a video source directly in to the
+  createPattern method, but most/all browsers don't support this yet 
+  (or I've done something wrong), so what I'm doing is this this:
+  
+  1. run a hidden video with @brucel
+  2. on timeupdate, draw the video in to a static canvas
+  3. use the static canvas as a source for createPattern
+  4. fill using the canvas based pattern
+  
+  Hey presto - you can never get enough @brucel.
+  
+  - Enjoy, @rem
+  
+-->
+<canvas id="pattern"></canvas>
+<canvas id="mirror" height="78" width="78"></canvas>
+<video id="video" autoplay loop>
+  <source src="leverage-a-synergy.ogv" type="video/ogg" />
+  <source src="leverage-a-synergy.mp4" type="video/mp4" />
+</video>
+<script>
+var pattern = document.getElementById('pattern'), 
+    mirror = document.getElementById('mirror'),
+    video = document.getElementById('video'),
+    img = document.getElementById('img'),
+    pctx = pattern.getContext ? pattern.getContext('2d') : null,
+    mctx = mirror.getContext ? mirror.getContext('2d') : null,
+    shortestEdge = 0;
+
+pattern.width = window.innerWidth;
+pattern.height = window.innerHeight;
+
+video.addEventListener('loadeddata', function () {
+  this.height = this.videoHeight;
+  this.width = this.videoWidth;
+  
+  shortestEdge = this.height < this.width ? this.height : this.width;
+}, false);
+
+video.addEventListener('timeupdate', function () {
+  if (pctx) {
+    // would be awesome to crop, but you get the picture
+    mctx.drawImage(video, this.width - shortestEdge, this.height - shortestEdge, shortestEdge, shortestEdge, 0, 0, mirror.width, mirror.height);
+    
+    pctx.fillStyle = pctx.createPattern(mirror, 'repeat');
+    pctx.fillRect(0, 0, pattern.width, pattern.height);
+  } 
+}, false);
+
+pattern.addEventListener('click', function () {
+  video[video.paused ? 'play' : 'pause']();
+}, false);
+
+</script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset=utf-8 />
+<title>Simple Drag and Drop</title>
+<style>
+html { height: 100%; }
+body { font-family: helvetica; padding: 20px; color: #fff; background: #575757; background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#575757), to(#272727)); }
+/*#drop { min-height: 100px; border: 5px dashed #B9B9B9; padding: 10px; background: #171717; overflow: hidden; -webkit-border-radius: 10px; }*/
+/*#drop:hover, #drop.over { background: #4F4F4F; color: #fff; border-color: #CFCFCF;t }*/
+p { margin: 3px 0; }
+p[draggable] { color: #888; }
+img { margin: 10px; border: 5px solid #000; }
+textarea { height: 100px; width: 98%; font-size: 16px; padding: 5px;}
+</style>
+</head>
+<body>
+  <p>Drag any part of the text below to the textarea below to see it being <em>moved</em> from the current position to the textarea element.</p>
+  <p draggable>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  <textarea id="drop"></textarea>
+<script>
+
+var drop = document.getElementById('drop');
+
+document.getElementsByTagName('p')[1].ondragstart = function (event) {
+  event = event || window.event;
+  event.dataTransfer.setData('screen_name', 'rem');
+  event.dataTransfer.dropEffect = 'move';
+};
+
+// Tells the browser that we *can* drop on this target
+drop.ondragenter = function () { event.dataTransfer.dropEffect = 'move';return false; };
+drop.ondragover = function (event) { return false; };
+//   this.className = 'over';
+//   return false;
+// };
+
+drop.ondrop = function (event) {
+  event = event || window.event;
+  event.dataTransfer.effectAllowed = 'move'; 
+  this.className = '';
+  console.log(event.dataTransfer);
+  this.innerHTML += '<p>' + event.dataTransfer.getData('screen_name') + '</p>';
+};
+
+</script>
+</body>
+</html>

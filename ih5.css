@@ -1,0 +1,147 @@
+html { font-size: 100%; height: 100%; }
+
+section, article, footer { display: block; }
+
+body { 
+/*  height: 100%; */
+  background: #332314 url(bg.png) repeat-x top center; 
+  width: 560px; 
+  width: 570px;
+/*  width: 52em;*/
+  margin: 0 auto; 
+  color: #FDFFE9; 
+  text-shadow: 2px 1px 0px #332314;
+  font-family: sans-serif;
+  font-size: 67.5%;
+  padding: 0 35px;
+}
+ 
+body > :last-child {
+  padding-bottom: 20px;
+}
+ 
+@font-face {
+  font-family: 'ChunkFiveRegular';
+  src: url('Chunkfive.eot');
+  src: local('ChunkFive Regular'), local('ChunkFive'), url('Chunkfive.otf') format('opentype'), url('Chunkfive.svg#ChunkFive') format('svg');
+}
+ 
+h1, h2 { 
+  line-height: normal; 
+  font-weight: normal; 
+  font-family: 'ChunkFiveRegular', sans-serif
+}
+
+header h1, header h2 {
+  margin: 0;
+}
+
+h1 {
+  margin-top: 0;
+  padding-top: 30px;
+  font-size: 4em;
+}
+
+header h1 {
+  font-size: 2em;
+}
+ 
+p, a {
+  font-family: "helvetica neue", helvetica, arial;
+  text-align: justify;
+  font-weight: light;
+}
+
+thead { display: none; }
+
+p,li,td,th,dt,pre,blockquote {
+  line-height: 1.8em;
+  font-size: 1.4em;
+}
+
+table {
+  width: 52em;
+  border-collapse:collapse;
+}
+
+tbody {
+  counter-reset: position -1;
+}
+
+tbody tr td {
+  padding: 2px 10px 2px 0;
+}
+
+tbody tr:hover td {
+  background: #4D3319;
+}
+
+tbody tr td:first-child {
+  width: 32em;
+} 
+
+tbody tr td:first-child:before {
+  content: counter(position) '. ';
+  counter-increment: position;
+}
+ 
+h1 { text-transform: uppercase; }
+h2 { font-size: 3em; color: #CAA273; clear: left; }
+span.introducing { font-size: 3.4em; display: block; }
+span.html5 { font-size: 7em; display: block; color: #FDFFE9; }
+span.html5 span { color: #d37422; }
+ 
+a img {
+  border: 0;
+}
+ 
+.bookinfo { 
+  min-height: 180px; 
+}
+
+.bookinfo > * { 
+  margin-left: 260px;
+}
+
+.bookinfo p {
+  margin-bottom: 0;
+}
+
+.bookinfo img {
+  float: left;
+  border: 5px solid rgb(51,35,20);
+  margin: 0;
+}
+ 
+a {
+  color: #CAA273;
+  font-weight: bold;
+  text-decoration: none;
+}
+ 
+a:hover {
+  border-bottom: 3px solid #E4AE6D;
+  color: #E4AE6D;
+  text-shadow: 3px 3px 3px #332314;
+}
+
+.bookinfo > a:hover {
+  border: 0;
+}
+ 
+ul {
+  margin: 0;
+  padding-left: 16px;
+  list-style: square;
+}
+
+mark {
+  text-shadow: none;
+}
+
+.update {
+  padding: 10px;
+  background: hsla(0, 100%, 100%, 0.05);
+  box-shadow: 0 0 20px #000;
+  line-height: 1.5em;
+}

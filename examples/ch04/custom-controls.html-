@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset=utf-8 />
+<title>Video custom controls</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 10px;
+}
+
+.videochrome {
+  position: relative;
+  overflow: hidden;
+}
+
+.videochrome .controls {
+  position: absolute;
+/*  top: 0;*/
+  height: 20px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  -webkit-transition: opacity ease-out 200ms;
+  -moz-transition: opacity ease-out 200ms;
+  -o-transition: opacity ease-out 200ms;
+  transition: opacity ease-out 200ms;
+}
+
+.videochrome .play {
+  color: #fff;
+  border: 0;
+  cursor: pointer;
+  width: 30px;
+  font-size: 17px;
+  line-height: 30px;
+  height: 30px;
+  display: block;
+  float: left;
+  font-family: arial;
+  background: transparent;
+}
+
+.videochrome .duration {
+  margin-left: 10px;
+  margin-right: 10px;
+  font-family: "helvetica neue", arial, helvetica;
+  float: right;
+  display: block;
+  font-size: 10px;
+  line-height: 30px;
+  height: 30px;
+}
+
+.videochrome .play[paused] {
+  font-size: 12px;
+}
+
+.videochrome .play[disabled] {
+  display: none;
+}
+
+.videochrome .scrub {
+  position: absolute;
+  height: 30px;
+  bottom: -30px;
+  color: #fff;
+  width: 100%;
+  background: rgba(0,0,0,.5);
+  -webkit-transition: bottom ease-out 200ms;
+  -moz-transition: bottom ease-out 200ms;
+  -o-transition: bottom ease-out 200ms;
+  transition: bottom ease-out 200ms;
+}
+
+.videochrome .scrub .loaded {
+  background: rgba(229,229,229,0.3);
+  margin: 10px 0;
+  height: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
+
+.videochrome:hover .controls,
+.videochrome.paused .controls {
+  opacity: 1;
+}
+
+.videochrome.paused .controls .scrub,
+.videochrome:hover .scrub {
+  bottom: 0;
+}
+
+
+
+.videochrome .controls .loaded .buffer {
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.7);
+  width: 0%;
+  height: 10px;
+  cursor: pointer;
+}
+
+.videochrome .controls .loaded .playhead { 
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  color: #393939;
+  line-height: 10px;
+  font-family: "helvetica neue", arial, helvetica;
+  text-align: right;
+  font-size: 10px;
+  background: #fff;
+  width: 0%;
+  height: 10px;  
+}
+
+.videochrome .controls .playhead span {
+  padding: 0 5px;
+}
+
+.videochrome .controls .scrub div {
+  -webkit-transition: width linear 100ms;
+  -moz-transition: width linear 100ms;
+  -o-transition: width linear 100ms;
+  transition: width linear 100ms;
+}
+
+.videochrome .controls .scrub div.scrubbing {
+  -webkit-transition: none ;
+  -moz-transition: none;
+  -o-transition: width none;
+  transition: none;
+}
+</style>
+</head>
+<body>
+  <div class="videochrome paused">
+    <div class="controls">
+      <div class="scrub">
+        <input type="button" class="play" value="&#x25BA;" />
+        <div class="duration">0:00</div>
+        <div class="loaded"><div class="buffer"><div class="playhead"><span>0:00</span></div></div></div>
+      </div>
+    </div>
+    <video controls>
+      <source src="leverage-a-synergy.ogv" type="video/ogg" />
+      <source src="leverage-a-synergy.ogv" type="video/mp4" />
+      Your browser doesn't support video. 
+      Please download the video in <a href="leverage-a-synergy.ogv">Ogg</a> or <a href="leverage-a-synergy.mp4">mp4</a> format.
+    </video>
+  </div>
+  <!-- <p id="speed">
+    <a href="#slower">slower</a>
+    <a href="#faster">faster</a>
+  </p> -->
+<script>
+var video = document.getElementsByTagName('video')[0],
+    scrubbing = false,
+    wrapper = document.querySelector('.videochrome'),
+    buffer = document.querySelector('.videochrome .controls .buffer'),
+    bufferLeft = getLeft(buffer),
+    scrubWidth,
+    playhead = buffer.querySelector('.playhead'),
+    play = wrapper.querySelector('.play'),
+    duration = wrapper.querySelector('.duration'),
+    currentTime = playhead.querySelector('span');
+
+video.removeAttribute('controls');
+
+/*function reportevent(event) {
+  console.log(event.type);
+}
+var events = 'loadstart process suspend abort error emptied stalled play pause loadedmetadata loadeddata waiting playing canplay canplaythrough seeking seeked timeupdate ended ratechange durationchage volumnchange'.split(' ');
+events.forEach(function (type) {
+  video.addEventListener(type, reportevent, false);
+});
+*/
+video.addEventListener('loadeddata', canplay, false);
+
+
+video.addEventListener('play', playEvent, false);
+video.addEventListener('pause', pausedEvent, false);
+video.addEventListener('ended', function () {
+  this.pause();
+}, false);
+
+video.addEventListener('progress', updateSeekable, false);
+video.addEventListener('durationchange', updateSeekable, false);
+video.addEventListener('timeupdate', updatePlayhead, false);
+
+wrapper.addEventListener('keydown', function (event) {
+  if (event.which == 32) { // space
+    play.onclick();
+  } else if (event.which == 37) { // left cursor
+    video.currentTime -= 0.08;
+  } else if (event.which == 39) { // right cursor
+    video.currentTime += 0.08; // about 1/12 of a second
+  }
+}, false);
+
+buffer.addEventListener('click', function (event) {
+  scrubbing = true;
+  movePlayHead(event);
+  scrubbing = false;
+}, false);
+
+buffer.addEventListener('mousedown', function (event) {
+  scrubbing = true;
+  playhead.className += ' scrubbing';    
+}, false);
+
+document.addEventListener('mouseup', function () {
+  if (scrubbing) {
+    scrubbing = false;
+    playhead.className = 'playhead';
+  }
+}, false);
+
+document.addEventListener('mousemove', function (event) {
+  if (scrubbing) {
+    movePlayHead(event);
+    return false;
+  }
+}, false);
+
+function canplay() {
+  this.height = this.videoHeight;
+  this.width = this.videoWidth;
+  this.parentNode.style.height = this.videoHeight + 'px';
+  this.parentNode.style.width = this.videoWidth + 'px';
+  scrubWidth = parseFloat(getComputedStyle(buffer.parentNode, null).width);
+  initControls();
+}
+
+function playEvent() {
+  this.parentNode.className = this.parentNode.className.replace(/ paused/, '');
+  play.value = '▌▌';
+  play.setAttribute('paused', true);
+}
+
+function pausedEvent() {
+  this.parentNode.className += ' paused';
+  play.removeAttribute('paused');
+  play.value = '►';
+}
+
+function asTime(t) {
+  t = Math.round(t);
+  var s = t % 60;
+  var m = ~~(t / 60);
+  
+  return m + ':' + two(s);
+}
+
+function two(s) {
+  s += "";
+  if (s.length < 2) s = "0" + s;
+  return s;
+}
+
+function movePlayHead(event) {
+  video.currentTime = (100 / scrubWidth * (event.clientX - bufferLeft + 10)) * (video.duration / 100);
+  event.preventDefault();
+  event.stopPropagation();
+  
+}
+
+function getLeft(el) {
+  var doc = document.documentElement, body = document.body, left = 0;
+  while ((el = el.parentNode) && el != body && el != doc) {
+    left += el.offsetLeft;
+  }
+  return left + body.offsetLeft;
+}
+
+function updateSeekable(event) {
+  buffer.style.width = (100 / (video.duration || 1) * (this.seekable && this.seekable.length ? this.seekable.end() : this.duration)) + '%';
+  duration.innerHTML = asTime(video.duration);
+}
+
+function updatePlayhead() {
+  setTimeout(function () {
+    playhead.style.width = (100 / (video.duration) * video.currentTime) + '%';
+    currentTime.innerHTML = asTime(video.currentTime);
+  }, 25);
+}
+
+function initControls() {
+  video.parentNode.tabIndex = 0;
+  duration.innerHTML = asTime(video.duration);
+  play.removeAttribute('disabled');
+  play.onclick = function () {
+    if (video.ended) {
+      video.currentTime = 0;
+    }
+    
+    video[video.paused ? 'play' : 'pause']();
+  };
+  
+  updateSeekable.call(video);
+}
+
+function speedup(video, direction) {
+  if (direction == undefined) direction = 1; // or -1 for reverse
+  
+  if (video.playbackRate != undefined) {
+    video.playbackRate = direction == 1 ? 2 : -2;
+  } else { // do it manually
+    video.setAttribute('data-playbackRate', setInterval((function () {
+      video.currentTime += direction; // 10 second jump
+      return arguments.callee;
+    })(), 500));
+  }
+}
+
+function playnormal(video) {  
+  if (video.playbackRate != undefined) {
+    video.playbackRate = 1;
+  } else { // do it manually
+    clearInterval(video.getAttribute('data-playbackRate'));
+  }
+}
+</script>
+</body>
+</html>

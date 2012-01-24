@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>simple animation</title>
+<style>
+body { margin: 0; padding: 0; background: #000; } 
+canvas { margin: 0; display: block; }
+</style>
+</head>
+<body>
+<canvas height="300" width="600"></canvas>
+<script>
+var ctx = document.querySelector('canvas').getContext("2d"),
+    ballctx,
+    x = 100, // arbitrary start points
+    y = 50,
+    dx = 2,
+    dy = 4,
+    width = ctx.canvas.width,
+    height = ctx.canvas.height;
+
+// load the image
+ballImg = document.createElement('img');
+ballImg.src = 'bruce-ball.png';
+
+// once loaded, start the ball bouncing
+ballImg.onload = function () {
+  var ball = document.createElement('canvas'); // ball canvas  
+  ball.style.display = 'none'; // hide
+  ball.height = 50; 
+  ball.width = 50;
+  document.body.appendChild(ball); // has to be in the DOM to paint properly
+
+  ballctx = ball.getContext('2d');
+  ballctx.translate(25, 25); // translate to centre to rotate properly
+  setInterval(draw, 10);
+};
+
+
+function draw() {
+  ctx.clearRect(0, 0, width, height);
+
+  ballctx.rotate(Math.PI/180*5); // 5 degrees
+  
+  // draw at the 0,0 position
+  ballctx.drawImage(ballImg, 0, 0, ballImg.width, ballImg.height, -25, -25, 50, 50);
+  
+  // copy the rotated source
+  // ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  ctx.drawImage(ballctx.canvas, x, y);
+
+  if (x + dx > width || x + dx < 0)
+    dx = -dx;
+  if (y + dy > height || y + dy < 0)
+    dy = -dy;
+
+  x += dx;
+  y += dy;
+}
+
+
+</script>
+</body>
+</html>

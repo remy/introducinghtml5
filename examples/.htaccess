@@ -1,0 +1,9 @@
+<IfModule mod_rewrite.c>
+Options +FollowSymLinks +ExecCGI
+Options +Indexes
+RewriteEngine On
+RewriteBase /examples/
+
+RewriteCond "%{REQUEST_FILENAME}.html" -f
+RewriteRule ^(.*)$ $1.html [L]
+</IfModule>

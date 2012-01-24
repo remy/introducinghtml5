@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset=utf-8 />
+<title>Simple Drag and Drop</title>
+<style>
+html { height: 100%; }
+body { font-family: helvetica; padding: 20px; color: #fff; background: #575757; background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#575757), to(#272727)); }
+#drop { min-height: 100px; border: 5px dashed #B9B9B9; padding: 10px; background: #171717; overflow: hidden; -webkit-border-radius: 10px; }
+p { margin: 3px 0; }
+img { margin: 10px; border: 5px solid #000; }
+#debug { border: 2px solid #B9B9B9; padding: 10px; max-height: 400px; overflow: auto; margin-top: 20px; }
+</style>
+</head>
+<body>
+  <p>Drag the images below over the grey drop zone to capture their <em>drop data</em>: the <code>src</code>.</p>
+  <img src="rem.jpg" alt="@rem" />
+  <img src="brucel.jpg" alt="@brucel" />
+  <div id="drop"></div>
+  <div id="debug"></div>
+<script>
+var addEvent = function (el, type, fn) {
+  var callee = arguments.callee;
+  
+  el.addEventListener(type, fn, false);
+  
+  // this is going to confuse some people!
+  return function (type, fn) {
+    return callee(el, type, fn);
+  };
+};
+
+function logEvent(event) {
+  event.preventDefault();
+  debug.innerHTML = '<p>' + event.type + '</p>' + debug.innerHTML;
+  return false;
+}
+
+var drop = document.getElementById('drop');
+var debug = document.getElementById('debug');
+
+addEvent(drop, 'dragover', logEvent)('drop', logEvent)('dragenter', logEvent)('dragleave', logEvent);
+addEvent(document.getElementsByTagName('img')[0], 'dragend', logEvent)('dragstart', logEvent);
+
+
+// Tells the browser that we *can* drop on this target
+// drop.ondragenter = function () { return false; };
+drop.ondragover = function (event) { return false; };
+
+drop.ondrop = function (event) {
+  event = event || window.event;
+  this.innerHTML += '<p>' + event.dataTransfer.getData('Text') + '</p>';
+  // return false;
+};
+
+</script>
+</body>
+</html>

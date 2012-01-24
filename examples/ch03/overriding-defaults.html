@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset=utf-8 />
+<title>Over riding default validation</title>
+<style>
+body {
+  font-family: "helvetica neue", arial, helvetica;
+}
+</style>
+</head>
+<body>
+<form>
+  <fieldset>
+    <legend>Typical validation</legend>
+    <input id="oldemail" name="oldemail" type="email" />
+    <input type="submit" />    
+  </fieldset>
+</form>
+
+<form>
+  <fieldset>
+    <legend>Pirate speak validation</legend>
+    <input id="pirateemail" name="pirateemail" type="email" />
+    <input type="submit" />    
+  </fieldset>
+</form>
+
+<script>
+var email = document.getElementById('pirateemail');
+email.form.onsubmit = function () {
+  email.setCustomValidity("\n" + email.value + " be not a legal e-mail address");
+};
+</script>
+ </body>
+</html>

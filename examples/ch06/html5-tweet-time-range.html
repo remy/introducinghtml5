@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset=utf-8 />
+<title>HTML5 tweet time range</title>
+<style>
+  body { font-family: helvetica, arial;}
+</style>
+</head>
+<body>
+  <form>
+    <fieldset>
+    <legend>Select a time range of recent HTML5 tweets</legend>
+    <input type="radio" value="5" id="t5m" name="timerange" /><label for="t5m">5 minutes</label>
+    <input type="radio" value="30" id="t30m" name="timerange" /><label for="t30m">30 minutes</label>
+    <input type="radio" value="120" id="t2h" name="timerange" /><label for="t2h">2 hours</label>
+    <input type="radio" value="all" id="tall" name="timerange" checked="checked" /><label for="tall">all time</label>
+    </fieldset>
+  </form>
+  <ul id="tweets"></ul>
+<script>
+var tweetEl = document.getElementById('tweets');
+var db;
+
+function getTweets() {
+  var script = document.createElement('script');
+  script.src = 'http://search.twitter.com/search.json?q=html5 -RT&rpp=100&callback=saveTweets';
+  document.body.appendChild(script);
+}
+
+// our Twitter API callback function
+function saveTweets(tweets) {
+  tweets.results.forEach(function (tweet) {
+    db.transaction(function (tx) {
+      var time = (new Date(Date.parse(tweet.created_at))).getTime();
+      tx.executeSql('INSERT INTO tweets (id, screen_name, date, text) VALUES (?, ?, ?, ?)', [tweet.id, tweet.from_user, time / 1000, tweet.text]); // div 1000 to get to seconds
+    });    
+  });
+}
+
+
+function show(amount) {
+  db.transaction(function (tx) {
+    tx.executeSql('SELECT * FROM tweets' + (amount != 'all' ? ' WHERE date > strftime("%s", "now", "-' + amount + ' minutes")' : ''), [], function (tx, results) {
+      var html = [], 
+          len = results.rows.length;
+          
+      for (var i = 0; i < len; i++) {
+        html.push('<li>' + results.rows.item(i).text + '</li>');
+      }
+      tweetEl.innerHTML = html.join('');
+    });
+  });
+}
+
+[].forEach.call(document.querySelectorAll('input[type=radio]'), function (el) {
+  el.onclick = function () {
+    show(this.value);
+  }
+});
+
+function setupDatabase() {
+  if (!window.openDatabase) {
+    tweetEl.innerHTML = '<li>Web SQL Database API is not available in this browser, please try nightly Opera, Webkit or Chrome.</li>';
+    return;
+  }
+  db = openDatabase('tweets', '1.0', 'db of tweets', 2 * 1024 * 1024);
+  db.transaction(function (tx) {
+    tx.executeSql('CREATE TABLE tweets (id unique, screen_name, date integer, text)');
+  });
+  getTweets();
+}
+
+setupDatabase();
+
+</script>
+</body>
+</html>

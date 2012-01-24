@@ -1,0 +1,24 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+<meta charset=utf-8 /> 
+<title>Testing input support</title> 
+</head> 
+<body> 
+  <input type="email" /> 
+  <input type="tel" /> 
+  <input type="range" /> 
+  <input type="url" /> 
+  <input type="number" /> 
+  <input type="tel" /> 
+  <input type="date" /> 
+  <input type="datetime" /> 
+  <ol id="debug"></ol> 
+<script>var d = document.getElementById('debug');
+[].forEach.call(document.querySelectorAll('input'), function (el) {
+  d.innerHTML += '<li>' + el.type;
+  d.innerHTML += el.getAttribute('type')  + '</li>';
+});
+</script>  
+</body> 
+</html>

@@ -1,0 +1,61 @@
+<!doctype html>
+<meta charset=utf-8>
+<title>Introducing HTML5: chapter 2 errata</title>
+<link rel="stylesheet" href="/ih5.css" type="text/css" />
+<h1>Errata for Chapter 2</h1>
+<dl>
+<dt>Page 26</dt>
+<dd><p>The <time> element has been removed and replaced with the more general - and therefore less useful - <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/text-level-semantics.html#the-data-element">&lt;data&gt; element</a>. The pubdate attribute is gone, with no simple replacement. <a href="http://www.brucelawson.co.uk/2011/goodbye-html5-time-hello-data/">Bruce has more history and opinion if that's your thing.</a>
+</dd>
+<dt>Page 50 (first paragraph)</dt>
+<dd><p>"Some of these obviously match HTML5 elements such as <code>&lt;article&gt;</code>, <code>&lt;form&gt;</code>, <code>&lt;heading&gt;</code> &hellip;"</p>
+<p><code>&lt;heading&gt;</code> should read <code>&lt;header&gt;</code>. What a numpty, eh?</p>
+<dt>Page 53, <code>&lt;figure&gt;</code> section</dt>
+<dd>
+<p>See the <a href="/examples/ch02/figure.html">example</a>, coded:</p>
+<pre><code>
+&lt;figure&gt;
+&lt;img src=welcome.jpg 
+  alt=""&gt; <!-- no alt, as it's covered by the caption -->
+&lt;figcaption&gt;
+Bruce and Remy welcome questions
+&lt;small&gt;Photo &copy; Bruce's mum&lt;/small&gt;
+&lt;/figcaption&gt;
+&lt;/figure&gt;
+</code></pre>
+<p>Since the book went to press, Steve Faulkner of The Paciello Group pointed out a problem with the alt text in this example.</p>
+<p>In figures where the <code>figcaption</code> text tells you all you need to know ("Angelina Jolie and Remy Sharp pose on the red carpet at the premier of 'HTML5! the musical'"), don't duplicate this in alt text.</p>
+<p>This is what I've done above, except that I've made a mistake: if an image has empty alt text (eg <code>alt=""</code>) it is regarded as being presentational only, and having an implied ARIA <code>role=presentation</code> which would remove the element from the page's accessibility tree (no user agent does this, yet, but that's the general plan).</p>
+<p>As the image is not purely presentational (if it were, we wouldn't be marking it up as a figure and giving it a caption) we shouldn't have empty alt, we should use no alternate text at all, e.g.</p>
+<code>&lt;img src=welcome.jpg&gt;</code>
+<p>Steve has written a very useful document <a href="http://dev.w3.org/html5/alt-techniques/">HTML5: Techniques for providing useful text alternatives</a> (that is a First Public Working Draft, therefore very, very susceptible to change) in which he writes</p>
+<blockquote>
+Circumstances in which it is not appropriate to use an empty or null alt attribute:
+An image is contained within a figure element and has an associated caption provided using the figcaption element.
+<footer><a href="http://dev.w3.org/html5/alt-techniques/#hf">HTML5: Techniques for providing useful text alternatives: The figure and figcaption elements</a></footer>
+</blockquote>
+<p>On the other hand, you may think that the example above needs alt text 
+<code>&lt;img src=welcome.jpg alt="Bruce and Remy glower menacingly into the camera"&gt;</code> because otherwise the joke isn't communicated to a screenreader user.</p>
+
+<p>As an accessibility filip, it's useful to add  ARIA attributes to associate the image with the caption until browsers "understand" the <code>figure</code> element and do this automatically.</p>
+<p>When there is no alt text, use <code>aria-labelledby</code> to associate the <code>id</code> of the <code>figcaption</code> to the <code>img</code>:<p>
+<pre><code>&lt;figure&gt;
+&lt;img src=welcome.jpg <mark>aria-labelledby=figcap219</mark>&gt;
+&lt;figcaption <mark>id=figcap219</mark>&gt;
+Angelina Jolie and Remy Sharp pose on the red carpet at the premier of 'HTML5! the musical'
+&lt;/figcaption&gt;
+&lt;/figure&gt;</code></pre>
+<p>If there is alt text, use <code>aria-describedby</code>:</p>
+<pre><code>&lt;figure&gt;
+&lt;img src=welcome.jpg 
+alt="Bruce and Remy glower menacingly into the camera"
+<mark>aria-describedby=figcap219</mark>&gt;
+&lt;figcaption <mark>id=figcap219</mark>&gt;
+Bruce and Remy welcome questions
+&lt;small&gt;Photo &copy; Bruce's mum&lt;/small&gt;
+&lt;/figcaption&gt;
+&lt;/figure&gt;</code></pre>
+<p></p>
+</dd>
+</dl>
+<footer><p>Errata notice: If you spot any simple typos, please email <a href="mailto:errata@peachpit.com?subject=Introducing%20;HTML5:%20;typo">errata@peachpit.com</a>. If you find a content error, please mail <a href="mailto:authors@introducinghtml5.com">authors@introducinghtml5.com</a>.</p></footer>

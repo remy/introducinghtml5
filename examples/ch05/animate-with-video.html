@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>simple animation</title>
+<style>
+body { margin: 0; padding: 0; background: #000; } 
+canvas { margin: 0; display: block; }
+video { display: none; } /* easier to put it in the page than generate using with JavaScript */
+</style>
+</head>
+<body>
+<canvas height="300" width="600"></canvas>
+<video loop>
+  <source src="leverage-a-synergy.mp4" />
+  <source src="leverage-a-synergy.ogv" />
+</video>
+<script>
+var x = 150,
+    y = 150,
+    dx = 2,
+    dy = 4,
+    ctx = document.querySelector('canvas').getContext("2d"),
+    copy,
+    WIDTH, 
+    HEIGHT,
+    ballImg,
+    ballSize = 100,
+    direction = -1,
+    running = null;
+
+function circle(x,y,r) {
+  copy.rotate(Math.PI/180*1*direction);  
+  copy.drawImage(ballImg, 0, 0, ballImg.videoWidth, ballImg.videoHeight, -ballSize, -ballSize, ballSize*2, ballSize*2);
+  
+  // copy the rotated source
+  ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  ctx.drawImage(copy.canvas, x, y);
+}
+
+function clear() {
+  ctx.clearRect(0, 0, WIDTH, HEIGHT);
+}
+
+function init() {
+  ballImg = document.querySelector('video');
+  ballImg.addEventListener('loadeddata', function () {
+    var copycanvas = document.createElement('canvas');
+    copycanvas.style.display = 'none';
+    document.body.appendChild(copycanvas);
+    copycanvas.height = ballSize*2;
+    copycanvas.width = ballSize*2;
+    copy = copycanvas.getContext('2d');
+    copy.translate(ballSize, ballSize);
+
+    copy.arc(0, 0, ballSize, 0, Math.PI*2, true);
+    copy.clip();
+    
+    WIDTH = ctx.canvas.width = window.innerWidth;
+    HEIGHT = ctx.canvas.height = window.innerHeight;
+    
+    clearInterval(running);
+    running = setInterval(draw, 13);
+  }, false);
+  ballImg.play();
+  
+}
+
+window.onresize = function () {
+  WIDTH = ctx.canvas.width = window.innerWidth;
+  HEIGHT = ctx.canvas.height = window.innerHeight;  
+}
+
+function draw() {
+  clear();
+  circle(x, y);
+
+  if (x + dx > (WIDTH-(ballSize*2)) || x + dx < 0)
+    dx = -dx;
+  if (y + dy > (HEIGHT-(ballSize*2)) || y + dy < 0)
+    dy = -dy;
+
+  direction = dx < 0 ? -1 : 1;
+  
+  dy += 0.25;
+
+  x += dx;
+  y += dy;
+}
+
+init();
+
+// add support to press space to pause
+window.addEventListener('keydown', function (event) {
+  if (event.which == 32) {
+    if (running == null) {
+      ballImg.play();
+      running = setInterval(draw, 13);
+    } else {
+      ballImg.pause();
+      clearInterval(running);
+      running = null;
+    }
+  }
+}, false);
+
+
+// ctx.canvas.onclick = function () {
+//   ballImg.src = ballImg.src.indexOf('bruce-ball.png') !== -1 ? 'remy-ball.png' : 'bruce-ball.png';
+// };
+
+
+</script>
+</body>
+</html>

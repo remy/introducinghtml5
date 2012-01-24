@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset=utf-8 />
+<title>Getting the time to the exact minute via a worker</title>
+</head>
+<body>
+<p id="time">This will update to the exact minute</p>
+<script>
+var w = new Worker('worker-time.js'),
+    time = document.getElementById('time');
+    
+w.onmessage = function (event) {
+  time.innerHTML = event.data;
+};
+</script>
+</body>
+</html>

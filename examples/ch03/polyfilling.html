@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset=utf-8 />
+<title>placeholder and autofocus pollyfilling</title>
+<style>
+body { font-family: "helvetica neue", arial, helvetica; }
+</style>
+</head>
+<body>
+  <h1>Example of placeholder &amp; autofocus</h1>
+  <input type=text autofocus placeholder="I'll be autofocused">
+  <input type=text placeholder="I won't be autofocused">
+<script>
+// from: http://gist.github.com/330318
+// minified pollyfilling code to enable placeholder and autofocus
+(function(f,g){function h(a,d){for(var c=a.length,b=0;b<c;b++)if(d.call(a[b],a[b],b,a)===false)break}var e=function(){return g.addEventListener?function(a,d,c){if(a&&a.nodeName||a===f)a.addEventListener(d,c,false);else if(a&&a.length)for(var b=0;b<a.length;b++)e(a[b],d,c)}:function(a,d,c){if(a&&a.nodeName||a===f)a.attachEvent("on"+d,function(){return c.call(a,f.event)});else if(a&&a.length)for(var b=0;b<a.length;b++)e(a[b],d,c)}}(),i=g.createElement("input"),j=g.getElementsByTagName("input");"placeholder"in
+  i||h(j,function(a){var d=a.getAttribute("placeholder"),c=function(){if(a.value==d){a.value="";a.style.color=""}},b=function(){if(a.value==""){a.value=d;a.style.color="#A29797"}};e(a,"focus",c);e(a,"blur",b);e(a.form,"submit",function(){c.call(a)});e(f,"unload",function(){c.call(a)});a.value==""&&b.call(a)});"autofocus"in i||h(j,function(a){if(a.getAttribute("autofocus")!=null){a.focus();return false}})})(window,document);
+</script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>canvas hello world</title>
+<style>
+canvas { margin: 0 auto; display: block; padding: 1px; }
+canvas:hover { border: 1px solid #eee; padding: 0; }
+</style>
+</head>
+<body>
+<canvas id="canvas" height="410" width="410"></canvas>
+<script>
+// spiral modified from http://www.pixelwit.com/blog/2008/04/how-to-draw-a-spiral/
+function spiral(centerX, centerY, radius, sides, coils, rotation){
+  var awayStep, aroundStep, aroundRadians, i, away, around, x, y;
+
+  // Start at the center.
+  ctx.beginPath();
+  ctx.moveTo(centerX, centerY);
+
+  // How far to step away from center for each side.
+  awayStep = radius/sides;
+
+  // How far to rotate around center for each side.
+  aroundStep = coils/sides;// 0 to 1 based.
+
+  // Convert aroundStep to radians.
+  aroundRadians = aroundStep * 2 * Math.PI;
+
+  // For every side, step around and away from center.
+  for (i=1; i<=sides; i++){
+
+    // How far away from center
+    away = i * awayStep;
+
+    // How far around the center.
+    around = i * aroundRadians + rotation;
+
+    // Convert 'around' and 'away' to X and Y.
+    x = centerX + Math.cos(around) * away;
+    y = centerY + Math.sin(around) * away;
+
+    // Now that you know it, do it.
+    ctx.lineTo(x, y);
+  }
+}
+
+var ctx = document.getElementById('canvas').getContext('2d');
+ctx.lineCap = 'round';
+ctx.strokeStyle = '#ddd';
+ctx.lineWidth = 10;
+
+var spiralArgs = [0, 0, 200, 1000, 10, 0];
+
+ctx.translate(ctx.canvas.width/2, ctx.canvas.height/2);
+spiral.apply(this, spiralArgs);
+ctx.stroke();
+
+setInterval(function () {
+  ctx.clearRect(-ctx.canvas.width/2, -ctx.canvas.height/2, ctx.canvas.width, ctx.canvas.height);
+  ctx.rotate(Math.PI / 180 * 0.5)
+  
+  spiral.apply(this, spiralArgs);
+  ctx.stroke();
+}, 10);
+
+</script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset=utf-8 />
+<title>JavaScript checkValidate on form elements</title>
+<style>
+body {
+  font-family: "helvetica", arial, helvetica;
+}
+label {
+  display: block;
+  float: left;
+  clear: left;
+  text-align: right;
+  width: 100px;
+  margin-right: 10px;
+}
+
+div { padding: 10px; }
+
+fieldset { border: 1px solid #ccc; margin-bottom: 20px; }
+
+</style>
+</head>
+<body>
+<form>
+  <fieldset>
+    <legend>Round one</legend>
+    <div><label for="email">Email:</label> <input novalidate id="email" name="email" type="email" /></div>
+    <div><label for="url">Homepage:</label><input id="url" type="url" name="url" required /></div> 
+    <input type="submit" class="savestate" value="Save" formnovalidate></input>   
+  </fieldset>
+
+  <fieldset>
+    <legend>Round two</legend>
+    <div><label for="email2">Email:</label> <input id="email2" name="email" type="email" /></div>
+    <div><label for="url2">Homepage:</label><input id="url2" type="url" name="url" required /></div>    
+    <input type="submit" class="savestate" value="Save" formnovalidate></input>   
+  </fieldset>
+  <input type="submit" />
+</form>
+<div id="debug"></div>
+<script>
+
+var form = document.getElementsByTagName('form')[0];
+form.onsubmit = function (event) {
+  for (var key in event) {
+    dump(key + ' = ' + event[key] + '');
+  }
+  
+  var i = this.length, el;
+  while (i--, el = this[i]) {
+    if (el.willValidate) dump([el.id, el.validity.valid]);
+  }
+
+  return false;
+};
+
+form.oninvalid = function (event) {
+  dump([].slice.call(event, 0));
+  // alert('was not valid');
+};
+
+function dump(obj) {
+  document.getElementById('debug').innerHTML += '<pre>' + JSON.stringify(obj) + '</pre>';
+}
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+

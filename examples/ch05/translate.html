@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>translate canvas helper</title>
+<style>
+canvas { margin: 0 auto; display: block; border: 1px solid #eee; }
+</style>
+</head>
+<body>
+<canvas id="canvas" height="300" width="300"></canvas>
+<script>
+function dot(s) {
+  ctx.beginPath();
+  ctx.arc(0,0,5,0,Math.PI*2,true);
+  ctx.fill();
+  ctx.fillText(s, 5, 10);
+}
+
+// setup
+var ctx = document.getElementById('canvas').getContext('2d');
+ctx.lineCap = 'round';
+ctx.strokeStyle = '#ddd';
+ctx.lineWidth = 5;
+// alert(ctx.font);
+ctx.font = 'italic 400 12px/2 helvetica neue, sans-serif';
+
+dot('1. no translate');
+
+ctx.translate(ctx.canvas.width/2, ctx.canvas.height/2);
+dot('2. (' + ctx.canvas.width/2 + ', ' + ctx.canvas.height/2 + ')');
+
+ctx.translate(-100, 20);
+dot('3. (-100, 20)');
+
+</script>
+</body>
+</html>

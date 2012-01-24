@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset=utf-8 />
+<title>onforminput colour picker</title>
+<style>
+body, input, textarea {
+  font-family: "helvetica", arial, helvetica;
+}
+label {
+  display: block;
+  float: left;
+  clear: left;
+  text-align: right;
+  width: 150px;
+  margin-right: 10px;
+}
+
+input[type=range] {
+  margin-right: 5px;
+}
+
+div { padding: 10px; }
+
+fieldset { border: 1px solid #ccc; margin-bottom: 20px; width: 400px; float: left; }
+#preview { display: block; float: left; height: 200px; width: 200px; background: hsl(180, 0%, 0%); margin: 10px; }
+</style>
+</head>
+<body>  
+<form>
+  <fieldset>
+    <legend>Colour picker</legend>
+    <div><label for="hue">Hue</label><input type="range" name="hue" value="0" min="0" max="360" id="hue" />360&deg;</div>
+    <div><label for="saturation">Saturation</label><input type="range" name="saturation" value="100" min="0" max="100" id="saturation" />%</div>
+    <div><label for="luminance">Luminance</label><input type="range" name="luminance" value="50" min="0" max="100" id="luminance" />%</div>
+    <div><label for="alpha_channel">Alpha channel</label><input type="range" name="alpha_channel" value="100" min="0" max="100" id="alpha_channel" />0-1</div>
+    <div><label for="color">HSLA:</label><output id="hsla">0</output></div>
+    <div><label>RGBA:</label><output id="rgba">0</output></div>
+  </fieldset>
+</form>
+<div id="preview"></div>
+<script>
+var hsla = document.getElementById('hsla'),
+    preview = document.getElementById('preview'),
+    rgba = document.getElementById('rgba'),
+    form = document.getElementsByTagName('form')[0];
+    
+form.onforminput = function () {
+  var i = this.length, values = [], value = 0;
+  while (i--, value = this[i].value) {
+    if (this[i].type == 'range') {
+      switch (this[i].name) {
+        case 'alpha_channel': values.push(value / 100); break;
+        case 'hue': values.push(value); break;
+        default: values.push(value + '%');
+      }      
+    }
+  }
+  preview.style.backgroundColor = hsla.value = 'hsla(' + values.reverse().join(', ') + ')';
+  rgba.value = getComputedStyle(preview, null).backgroundColor;
+};
+
+form.onforminput();
+</script>
+</body>
+</html>

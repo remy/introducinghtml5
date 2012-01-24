@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>pattern fill with video</title>
+<style>
+html,body { height: 100%;} 
+body { margin: 0; body: 0; overflow: hidden; } 
+#pattern { position: absolute; top: 0; left: 0; width: 100%; bottom: 0; height: 100%; } 
+p { position: relative; text-align: center; margin: 300px 0; font-size: 48px; text-shadow: 2px 2px 2px #000; color: #eee; font-family: sans-serif; font-weight: bold;}
+</style>
+</head>
+<body>
+<canvas id="pattern"></canvas>
+<p>See me move?</p>
+<script>
+var pattern = document.getElementById('pattern'), 
+    img = document.createElement('img'),
+    ctx = pattern.getContext ? pattern.getContext('2d') : null;
+
+// stretch
+pattern.width = window.innerWidth;
+pattern.height = window.innerHeight;
+
+img.onload = function () {
+  if (ctx) {
+    // would be awesome to crop, but you get the picture
+    ctx.fillStyle = ctx.createPattern(img, 'repeat');
+    ctx.fillRect(0, 0, pattern.width, pattern.height);
+    
+    var angle = 0;
+    var inc = 0.001;
+    var timer = setInterval(function () {
+      ctx.restore();
+      ctx.clearRect(0, 0, pattern.width, pattern.height);
+      ctx.save();
+
+      angle += inc;
+      ctx.rotate(Math.PI/180*angle);
+      ctx.scale(1+(angle/10), 1+(angle/10));
+      ctx.translate(-pattern.width * (Math.PI/180*angle), -pattern.height * (Math.PI/180*angle));
+
+      ctx.fillRect(0, 0, pattern.width, pattern.height);
+    }, 100);
+  } 
+};
+
+img.src = 'remysharp_avatar.jpg';
+
+</script>
+</body>
+</html>

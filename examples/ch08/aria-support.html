@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset=utf-8 />
+<title>Drag and Drop with ARIA support</title>
+<style>
+html { height: 100%; }
+body { font-family: helvetica; padding: 20px; color: #fff; background: #575757; background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#575757), to(#272727)); }
+#drop { min-height: 100px; border: 5px dashed #B9B9B9; padding: 10px; background: #171717; overflow: hidden; -webkit-border-radius: 10px; }
+p { margin: 3px 0; }
+img { margin: 10px; border: 5px solid #000; }
+#red { background-color: #f00; }
+#green { background-color: #0f0; }
+#blue { background-color: #00f; }
+#yellow { background-color: #ff0; }
+#white { background-color: #fff; }
+div[draggable] { height: 50px; width: 50px; display: inline-block; margin: 10px; border: 2px solid #ccc; }
+/* safari specific :( */
+[draggable] { -khtml-user-drag: element; }
+</style>
+</head>
+<body>
+  <p>Drag the images below over the grey drop zone to capture their <em>drop data</em>: the <code>backgroundColor</code>.</p>
+  <div draggable id="red"></div>
+  <div draggable id="green"></div>
+  <div draggable id="blue"></div>
+  <div draggable id="yellow"></div>
+  <div draggable id="white"></div>
+  <div id="drop"></div>
+<script>
+
+var drop = document.getElementById('drop'),
+    boxes = document.getElementsByTagName('div'), 
+    i = boxes.length;
+    
+while (i--) {
+  if (boxes[i].getAttribute('draggable') != undefined) {
+    boxes[i].ondragstart = function (event) {
+      event = event || window.event;
+      
+      var comp = this.currentStyle ? this.currentStyle : getComputedStyle(this, null);
+      event.dataTransfer.setData('color', comp['backgroundColor']);
+      
+      this.setAttribute('aria-grabbed', 'true');
+      // set the drop targets up for ARIA support
+      drop.tabIndex = 0; // for keyboard support
+      drop.setAttribute('aria-dropeffect', 'copy');
+    };
+    
+    boxes[i].ondragend = function () {
+      this.setAttribute('aria-grabbed', 'false');
+      
+      // reset the drop targets
+      drop.tabIndex = -1; // for keyboard support
+      drop.removeAttribute('aria-dropeffect');
+    };
+    
+    boxes[i].tabIndex = 0; // for keyboard support
+    boxes[i].setAttribute('aria-grabbed', 'false');
+  }
+}
+
+// Tells the browser that we *can* drop on this target
+// drop.ondragenter = function () { return false; };
+drop.ondragover = function (event) { return false; };
+
+drop.ondrop = function (event) {
+  event = event || window.event;
+  this.innerHTML += '<p>' + event.dataTransfer.getData('color') + '</p>';
+  return false;
+};
+
+</script>
+</body>
+</html>
