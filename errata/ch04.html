@@ -4,8 +4,14 @@
 <link rel="stylesheet" href="/ih5.css" type="text/css" />
 <h1>Errata for Chapter 4</h1>
 <dl>
-<dt>Page 99 Code Sample</dt>
+<dt>Edition 1: Page 99 Code Sample</dt>
 <dd><p>Not our error, but Steve Jobs'. The iPad (or some iPads) has a bug whereby they can only see the first <code>&lt;source&gt;></code> element. To get around this, simply ensure that your .mp4 movie appears before your nourishing royalty-free Ogg Theora or WebM movies, so reverse lines 2 and 3.</p>
 </dd>
 </dl>
+<dt>Edition 1: Page 140 - "Video conferencing, augmented reality"</dt>
+<dd>
+<p>Our margin note saying that Opera will implement getUserMedia on the opera object is incorrect. In its Lab builds, it's on the navigator object as specified.</p>
+<p>The API has slightly changed; it now uses JSON rather than string for options, eg <code>navigator.getUserMedia({'video': true, 'audio': false}, successcallbackFunction, errorcallbackFunction) </code>.</p>
+<p>The spec has been split out from HTML5; it's now part of <a href="http://dev.w3.org/2011/webrtc/editor/getusermedia.html">WebRTC</a>.  [January 2012]</p>
+</dd>
 <footer><p>Errata notice: If you spot any simple typos, please email <a href="mailto:errata@peachpit.com?subject=Introducing%20;HTML5:%20;typo">errata@peachpit.com</a>. If you find a content error, please mail <a href="mailto:authors@introducinghtml5.com">authors@introducinghtml5.com</a>.</p></footer>
