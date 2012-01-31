@@ -19,6 +19,15 @@
 <li><code>&lt;time datetime="1905-11-13T09:00"&gt;</code></li>
 <li><code>&lt;time datetime="1905-11-13 09:00"&gt;</code></li>
 </ul>
+
+<p>Appending "Z" to the timezone indicates UTC (a way of saying "GMT" without it being comprehensible to normal people). Otherwise, use an offset:</p>
+
+<ul>
+<li><code>&lt;datetime="09:00Z"&gt;</code> is 9am, UTC.</li>
+<li><code>&lt;datetime="09:00-05"&gt;</code> is 9am in the timezone 5 hours behind UTC.</li>
+<li><code>&lt;datetime="09:00+05:45"&gt;</code> is 9am in <a href="http://en.wikipedia.org/wiki/Nepal_Time">Nepal</a>, which is UTC + 5 hours and 45 minutes.</li>
+</ul>
+
 <p>In New! Improved! HTML5 &lt;time&gt;, you can represent durations, with the prefix &#8220;P&#8221; for &#8220;period&#8221;. This uses &#8220;W&#8221; (or &#8220;w&#8221;) for weeks, &#8220;D&#8221; for days, &#8220;H&#8221; for hours, &#8220;M&#8221; for minutes and &#8220;XQ&#8221; for seconds. Just kidding &#8211; that&#8217;s &#8220;S&#8221;. </p>
 <p>You can separate them with spaces (but you don&#8217;t have to). So <code>&lt;time datetime="P4W3D5H"&gt;</code> is a duration of 4 weeks, 3 days and 5 hours, as is <code>&lt;time datetime="P4W 3D 5H"&gt;</code>. A duration of 3 hours, 2 minutes and 23.005 seconds is <code>&lt;time datetime="P3H2M23.005S"&gt;</code> or <code>&lt;time datetime="P3H 2M 23.005S"&gt;</code>.</p>
 <p>This can be boiled down by a machine to a precise number of seconds. Because of this, you can&#8217;t specify a duration in terms of months, because a month isn&#8217;t a precise number of seconds; a month can last from 28 to 31 days. Similarly, a year isn&#8217;t a precise number of seconds; it&#8217;s 12 months and February sometimes has an extra day.</p>
