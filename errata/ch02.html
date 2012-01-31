@@ -5,8 +5,26 @@
 <h1>Errata for Chapter 2</h1>
 <dl>
 <dt>1,2 editions, Page 26 - 27</dt>
-<dd><p>The <code>&lt;time&gt;</code> element was removed, and restored. It's not fully specified yet, but the good news is that the new incarnation is more powerful than it was before. It's now possible to encode "fuzzy" dates ("1934", "November 1966") as well as durations. [January 2012]</p> 
-<p>The <code>pubdate</code> attribute of <code>&lt;time&gt;</code> is removed from <time> in the W3C spec, but remains present in the WHATWG spec. [January 2012]</p>
+<dd><p>The <code>&lt;time&gt;</code> element was removed, and restored. It's not fully specified yet, but the good news is that the new incarnation is more powerful than it was before.</p> 
+<p>Previously, you could only mark up precise dates. So, 13 November 1905 could be expressed in HTML <code>&lt;time datetime="1905-11-13"></code> but November 1905 couldn&#8217;t be. This is a problem for historians where sometimes the precise date isn&#8217;t known.</p>
+<p>Now, &#8220;fuzzy dates&#8221; are possible:</p>
+<ul>
+<li><code>&lt;time datetime="1905"&gt;</code> means the year 1905</li>
+<li><code>&lt;time datetime="1905-11"&gt;</code> means November 1905</li>
+<li><code>&lt;time datetime="11-13"&gt;</code> means 13 November (any year)</li>
+<li><code>&lt;time datetime="1905-W21"&gt;</code> means week 21 of 1905</li>
+</ul>
+<p>You can also separate the date and time with a space rather than a &#8220;T&#8221; (but you don&#8217;t have to). So both of these are valid:</p>
+<ul>
+<li><code>&lt;time datetime="1905-11-13T09:00"&gt;</code></li>
+<li><code>&lt;time datetime="1905-11-13 09:00"&gt;</code></li>
+</ul>
+<p>In New! Improved! HTML5 &lt;time&gt;, you can represent durations, with the prefix &#8220;P&#8221; for &#8220;period&#8221;. This uses &#8220;W&#8221; (or &#8220;w&#8221;) for weeks, &#8220;D&#8221; for days, &#8220;H&#8221; for hours, &#8220;M&#8221; for minutes and &#8220;XQ&#8221; for seconds. Just kidding &#8211; that&#8217;s &#8220;S&#8221;. </p>
+<p>You can separate them with spaces (but you don&#8217;t have to). So <code>&lt;time datetime="P4W3D5H"&gt;</code> is a duration of 4 weeks, 3 days and 5 hours, as is <code>&lt;time datetime="P4W 3D 5H"&gt;</code>. A duration of 3 hours, 2 minutes and 23.005 seconds is <code>&lt;time datetime="P3H2M23.005S"&gt;</code> or <code>&lt;time datetime="P3H 2M 23.005S"&gt;</code>.</p>
+<p>This can be boiled down by a machine to a precise number of seconds. Because of this, you can&#8217;t specify a duration in terms of months, because a month isn&#8217;t a precise number of seconds; a month can last from 28 to 31 days. Similarly, a year isn&#8217;t a precise number of seconds; it&#8217;s 12 months and February sometimes has an extra day.</p>
+<p>You still can&#8217;t represent dates before the Christian era, as years can&#8217;t be negative.</p>
+<h3>pubdate</h3>
+<p>The pubdate attribute (a boolean that indicates that this particular date is the publication date of the parent &lt;article&gt; (or, if there is none, the whole document) is currently missing from the W3C version of the spec, but is still current in the WHATWG version. Its status is unclear to me (but I&#8217;m still using it). [January 2012]</p>
 </dd>
 <dt>1 edition, Page 50 (first paragraph)</dt>
 <dd><p>"Some of these obviously match HTML5 elements such as <code>&lt;article&gt;</code>, <code>&lt;form&gt;</code>, <code>&lt;heading&gt;</code> &hellip;"</p>
