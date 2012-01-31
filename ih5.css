@@ -137,6 +137,8 @@ ul {
 
 mark {
   text-shadow: none;
+  color:black;
+  background-color:yellow;
 }
 
 .update {
