@@ -35,6 +35,26 @@
 <h3>pubdate</h3>
 <p>The pubdate attribute (a boolean that indicates that this particular date is the publication date of the parent &lt;article&gt; (or, if there is none, the whole document) is currently missing from the W3C version of the spec, but is still current in the WHATWG version. Its status is unclear to me (but I&#8217;m still using it). [January 2012]</p>
 </dd>
+<dt>1 edition, Page 28; 2 edition, Page 29 (Using &lt;blockquote&gt; &lt;footer&gt;s)
+<dd>
+<p>After <a href="http://lists.whatwg.org/htdig.cgi/whatwg-whatwg.org/2012-February/034822.html">discussion on the mailing list</a>, using &lt;footer&gt; inside a &lt;blockquote&gt; to attribute the quotation is wrong and evil (the attribution isn't actually part of the quotation.)</p>
+<p>A pattern might be</p>
+<pre>
+<code>&lt;figure&gt;
+&lt;blockquote&gt;
+Lawks-a-lawdy, my bottom's on fire!
+&lt;blockquote&gt;
+&lt;figcaption&gt;Joan of Arc&lt;/figcaption&gt;
+&lt;/figure&gt;
+</code>
+</pre>
+<p>Hixie writes</p>
+<blockquote>I expect we will eventually create a &lt;credit&gt; element that goes inside 
+&lt;blockquote&gt;, &lt;figure&gt; or &lt;figcaption&gt;, &lt;caption&gt;, and maybe other 
+contexts as well. At the moment, I'm deferring adding it so that we can 
+see how &lt;figure&gt; and the other new elements do in the wild.</blockquote>
+</p>
+</dd>
 <dt>1 edition, Page 50 (first paragraph)</dt>
 <dd><p>"Some of these obviously match HTML5 elements such as <code>&lt;article&gt;</code>, <code>&lt;form&gt;</code>, <code>&lt;heading&gt;</code> &hellip;"</p>
 <p><code>&lt;heading&gt;</code> should read <code>&lt;header&gt;</code>. What a numpty, eh?</p>
