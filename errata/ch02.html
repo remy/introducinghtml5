@@ -6,34 +6,49 @@
 <dl>
 <dt>1,2 editions, Page 26 - 27</dt>
 <dd><p>The <code>&lt;time&gt;</code> element was removed, and restored. It's not fully specified yet, but the good news is that the new incarnation is more powerful than it was before.</p> 
-<p>Previously, you could only mark up precise dates. So, 13 November 1905 could be expressed in HTML <code>&lt;time datetime="1905-11-13"></code> but November 1905 couldn&#8217;t be. This is a problem for historians where sometimes the precise date isn&#8217;t known.</p>
-<p>Now, &#8220;fuzzy dates&#8221; are possible:</p>
+<p>Previously, you could only mark up precise dates. So, 13 November 1905 could be expressed in HTML <code>&lt;time datetime="1905-11-13"></code> but November 1905 couldn't be. This is a problem for historians where sometimes the precise date isn't known.</p>
+
+<p>Now, "fuzzy dates" are possible:</p>
 <ul>
 <li><code>&lt;time datetime="1905"&gt;</code> means the year 1905</li>
 <li><code>&lt;time datetime="1905-11"&gt;</code> means November 1905</li>
 <li><code>&lt;time datetime="11-13"&gt;</code> means 13 November (any year)</li>
-<li><code>&lt;time datetime="1905-W21"&gt;</code> means week 21 of 1905</li>
-</ul>
-<p>You can also separate the date and time with a space rather than a &#8220;T&#8221; (but you don&#8217;t have to). So both of these are valid:</p>
+<li><code>&lt;time datetime="1905-W21"&gt;</code> means week 21 of 1905</li></ul>
+
+<p>As before, times are expressed using the 24 hour clock. Now, you can separate the date and time with a space rather than a "T" (but you don't have to). So both of these are valid:</p>
+
 <ul>
 <li><code>&lt;time datetime="1905-11-13T09:00"&gt;</code></li>
 <li><code>&lt;time datetime="1905-11-13 09:00"&gt;</code></li>
 </ul>
 
-<p>Appending "Z" to the timezone indicates UTC (a way of saying "GMT" without it being comprehensible to normal people). Otherwise, use an offset:</p>
-
+<p>You can localise times, as before. Appending "Z" to the timezone indicates UTC (a way of saying "GMT" without it being comprehensible to normal people). Otherwise, use an offset:</p>
 <ul>
-<li><code>&lt;datetime="09:00Z"&gt;</code> is 9am, UTC.</li>
-<li><code>&lt;datetime="09:00-05"&gt;</code> is 9am in the timezone 5 hours behind UTC.</li>
-<li><code>&lt;datetime="09:00+05:45"&gt;</code> is 9am in <a href="http://en.wikipedia.org/wiki/Nepal_Time">Nepal</a>, which is UTC + 5 hours and 45 minutes.</li>
+<li><code>&lt;time datetime="09:00Z"&gt;</code> is 9am, UTC.</li>
+<li><code>&lt;time datetime="09:00-05:00"&gt;</code> is 9am in the timezone 5 hours behind UTC.</li>
+<li><code>&lt;time datetime="09:00+05:45"&gt;</code> is 9am in <a href="http://en.wikipedia.org/wiki/Nepal_Time">Nepal</a>, which is UTC + 5 hours and 45 minutes.</li>
 </ul>
 
-<p>In New! Improved! HTML5 &lt;time&gt;, you can represent durations, with the prefix &#8220;P&#8221; for &#8220;period&#8221;. This uses &#8220;W&#8221; (or &#8220;w&#8221;) for weeks, &#8220;D&#8221; for days, &#8220;H&#8221; for hours, &#8220;M&#8221; for minutes and &#8220;XQ&#8221; for seconds. Just kidding &#8211; that&#8217;s &#8220;S&#8221;. </p>
-<p>You can separate them with spaces (but you don&#8217;t have to). So <code>&lt;time datetime="P4W3D5H"&gt;</code> is a duration of 4 weeks, 3 days and 5 hours, as is <code>&lt;time datetime="P4W 3D 5H"&gt;</code>. A duration of 3 hours, 2 minutes and 23.005 seconds is <code>&lt;time datetime="P3H2M23.005S"&gt;</code> or <code>&lt;time datetime="P3H 2M 23.005S"&gt;</code>.</p>
-<p>This can be boiled down by a machine to a precise number of seconds. Because of this, you can&#8217;t specify a duration in terms of months, because a month isn&#8217;t a precise number of seconds; a month can last from 28 to 31 days. Similarly, a year isn&#8217;t a precise number of seconds; it&#8217;s 12 months and February sometimes has an extra day.</p>
-<p>You still can&#8217;t represent dates before the Christian era, as years can&#8217;t be negative.</p>
+
+<h3>Durations</h3>
+
+<p>In New! Improved! HTML5 &lt;time&gt;, you can represent durations, with the prefix "P" for "period".</p> 
+
+<p>The datetime attribute "D" for days, "H" for hours, "M" for minutes and "XQ" for seconds. Just kidding - that's "S".</p> 
+
+<p>You can separate them with spaces (but you don't have to). So <code>&lt;time datetime="P4D"&gt;</code> is a duration of 4 days, as is <code>&lt;time datetime="P 4 D"&gt;</code>.</p>
+
+<p>Using a "T" after the "P" marker allows you to be more precise: <code>&lt;time datetime="PT23H 9M 2.343S"&gt;</code> is a duration of 23 hours, 9 minutes and 2.345 seconds.</p>
+
+<p>Alternatively, you can use a <a href="http://dev.w3.org/html5/spec/common-microsyntaxes.html#duration-time-component">duration time component</a>.</p>
+
+<p>Whichever you choose, it's represented internally as a number of seconds. Because of this, you can't specify a duration in terms of months, because a month isn't a precise number of seconds; a month can last from 28 to 31 days. Similarly, a year isn't a precise number of seconds; it's 12 months and February sometimes has an extra day.</p>
+
+<p>You still can't represent dates before the Christian era, as years can't be negative. Neither can you indicate date ranges. To mark up From "21/02/2012 to 25/02/2012", use two separate &lt;time&gt; elements.</p>
+
 <h3>pubdate</h3>
-<p>The pubdate attribute (a boolean that indicates that this particular date is the publication date of the parent &lt;article&gt; (or, if there is none, the whole document) is currently missing from the W3C version of the spec, but is still current in the WHATWG version. Its status is unclear to me (but I&#8217;m still using it). [January 2012]</p>
+
+<p>The pubdate attribute (a boolean that indicates that this particular date is the publication date of the parent &lt;article&gt; (or, if there is none, the whole document) is currently missing from the W3C version of the spec, but is still current in the WHATWG version. Its status is unclear to me (but I'm still using it).</p>
 </dd>
 <dt>1 edition, Page 28; 2 edition, Page 29 (Using &lt;blockquote&gt; &lt;footer&gt;s)
 <dd>
