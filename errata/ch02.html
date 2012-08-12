@@ -48,12 +48,12 @@
 
 <h3>pubdate</h3>
 
-<p>The pubdate attribute (a boolean that indicates that this particular date is the publication date of the parent &lt;article&gt; (or, if there is none, the whole document) has gone. However (hat-tip <a href="http://twitter.com/mathias">@mathias</a>) you can use HTML5 <a href="http://html5doctor.com/microdata/">microdata</a>'s equivalent <code>itemprop=pubdate</code> for appropriate <code>itemtype</code>s, for example:</p>
+<p>The pubdate attribute (a boolean that indicates that this particular date is the publication date of the parent &lt;article&gt; (or, if there is none, the whole document) has gone. However (hat-tip <a href="http://twitter.com/mathias">@mathias</a> and <a href="http://twitter.com/moddular">@moddular</a>) you can use HTML5 <a href="http://html5doctor.com/microdata/">microdata</a>'s equivalent <code>itemprop=datePublished</code> for appropriate <code>itemtype</code>s. In this example, we use schema.org's <a href="http://schema.org/Blog">Blog schema</a>:</p>
 <pre><code>
 &lt;article itemscope itemtype="http://schema.org/Blog"&gt;
   &lt;header&gt;
     &lt;h1&gt;Blog post&lt;/h1&gt;
-    &lt;time datetime="2012-07-30" itemprop="pubdate"&gt;Published 30th July 2012&lt;/time&gt;
+    &lt;time datetime="2012-07-30" itemprop="datePublished"&gt;Published 30th July 2012&lt;/time&gt;
   &lt;/header&gt;
 &hellip;
 &lt;/article&gt;
