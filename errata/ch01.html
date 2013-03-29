@@ -7,5 +7,13 @@
 <dt>1,2 editions, Page 2</dt>
 <dd><p>The link to regarding the utf-7 security risk doesn't work any more. See  <a href="http://blog.php-security.org/archives/38-Wikipedia-UTF-7-XSSCross-Site-Scripting-Hole-Plugged.html">http://blog.php-security.org/archives/38-Wikipedia-UTF-7-XSSCross-Site-Scripting-Hole-Plugged.html</a> instead.[January 2012]</p>
 </dd>
+
+<dt>2nd edition, Page 10, sidebar "why oh why is there no &lt;content&gt; element?</dt>
+<dd><p>Now there is! It's called &lt;main&gt;. Use it once per page (like ARIA's <code>role="main"</code> to surround your main content, eg don't include header, footer, main nav etc.) <a href="http://www.w3.org/html/wg/drafts/html/master/grouping-content.html#the-main-element">The spec says</a>:</p>
+	<blockquote><p>The main content area of a document includes content that is unique to that document and excludes content that is repeated across a set of documents such as site navigation links, copyright information, site logos and banners and search forms (unless the document or applications main function is that of a search form) &hellip;</p>
+	<p>Authors are advised to use ARIA role="main" attribute on the main element until user agents implement the required role mapping.</p>
+	</blockquote> 
+</dd>
+
 </dl>
 <footer><p>Errata notice: If you spot any simple typos, please email <a href="mailto:errata@peachpit.com?subject=Introducing%20;HTML5:%20;typo">errata@peachpit.com</a>. If you find a content error, please mail <a href="mailto:authors@introducinghtml5.com">authors@introducinghtml5.com</a>.</p></footer>
