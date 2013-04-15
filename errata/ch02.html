@@ -79,6 +79,33 @@ contexts as well. At the moment, I'm deferring adding it so that we can
 see how &lt;figure&gt; and the other new elements do in the wild.</blockquote>
 </p>
 </dd>
+
+<dt>1 edition page 33, 2 edition page 35: &lt;hgroup&gt;</dt>
+<dd><p>The <a href="http://www.brucelawson.co.uk/2013/farewell-hgroup/">&lt;hgroup&gt; element has been removed. So how do you now mark up taglines and subheaders? Simply: as you always have. The spec now discusses this in the  <a href="http://www.w3.org/html/wg/drafts/html/master/common-idioms.html#sub-head">Common idioms without dedicated elements</a> section.</p>
+
+<p>Three methods are suggested. The simplest is simply with punctuation:</p>
+
+<pre><code>&lt;h1&gt;The Lord of the Rings: The Two Towers&lt;/h1&gt;
+</code>
+</pre>
+
+<p>The second is by using a &lt;span&gt; inside a heading element that allows you to style the secondary part, for example with <code>h1 span {display:block; font-style:italic;}</code>:</p>
+
+<pre><code>&lt;h1&gt;The Mothers 
+   &lt;span&gt;Fillmore East - June 1971&lt;/span&gt; 
+&lt;/h1&gt;
+</code>
+</pre>
+
+<p>The third (and the one I generally use)</p>
+
+<pre><code>&lt;header&gt;
+&lt;h1&gt;The Mothers&lt;/h1&gt;
+&lt;p&gt;Fillmore East - June 1971&lt;/p&gt;
+&lt;/header&gt;
+</code>
+</pre>
+</dd>
 <dt>1 edition, Page 50 (first paragraph)</dt>
 <dd><p>"Some of these obviously match HTML5 elements such as <code>&lt;article&gt;</code>, <code>&lt;form&gt;</code>, <code>&lt;heading&gt;</code> &hellip;"</p>
 <p><code>&lt;heading&gt;</code> should read <code>&lt;header&gt;</code>. What a numpty, eh?</p>
