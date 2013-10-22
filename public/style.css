@@ -1,3 +1,13 @@
+q {
+  quotes: "“" "”" "‘" "’";
+}
+q:before {
+    content: open-quote;
+}
+q:after {
+    content: close-quote;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -18,8 +28,6 @@ h1 {
   font-size: 60px;
   margin: 0;
   padding-left: 40px;
-
-  line-height: 47px;
   margin-bottom: 1em;
 }
 
@@ -77,4 +85,10 @@ aside p {
 a {
   color: #72490d;
   font-weight: 500;
+}
+
+code {
+  color: #c77d01;
+  font-size: 1.2em;
+  font-family: monospace;
 }

@@ -2,10 +2,9 @@ var express = require('express'),
     hbs = require ('hbs'),
     // markdown = require('markdown').markdown,
     Showdown = require('showdown'),
-    aside = require('./lib/aside'),
-    dash = require('./lib/dash'),
+    extensions = require('./lib/mdExtensions'),
     converter = new Showdown.converter({
-      extensions: [aside, dash]
+      extensions: [extensions.dash, extensions.quotes, extensions.aside]
     }),
     fs = require('fs'),
     path = require('path'),
