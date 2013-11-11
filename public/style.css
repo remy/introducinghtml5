@@ -36,21 +36,77 @@ h2 {
   margin-top: 2em;
   margin-bottom: 0em;
   font-weight: 400;
+  font-size: 3em;
+  margin-right: 0;
 }
 
 h2:hover:after {
   content: '  #' attr(id);
-  font-size: 0.6em;
+  font-size: 14px;
   color: #f49600;
 }
 
-body > p {
+ul, ol {
+  margin: 0;
+  padding: 0;
+  margin-left: 20%;
+}
+
+li {
+  list-style: none;
+  padding-left: 10px;
+  line-height: 1.4em;
+  margin: 10px;
+  margin-right: 0;
+}
+
+li:before {
+  content: "• ";
+  color: #f49600;
+  display: block;
+  position: relative;
+  max-width: 0px;
+  max-height: 0px;
+  left: -20px;
+  top: -0px;
+}
+
+body > p,
+h3 {
   margin-left: 20%;
 /*   margin-right: 40px; */
   line-height: 1.8em;
   margin-top: 1em;
   margin-bottom: 1em;
 /*   max-width: 900px; */
+}
+
+blockquote {
+  font-size: 0.9em;
+  line-height: 1.6em
+}
+
+blockquote:before {
+  content: ' ';
+  background: url(/quote.png) no-repeat;
+  display: block;
+  height: 45px;
+  width: 40px;
+  float: left;
+  background-size: contain;
+}
+
+blockquote p:first-child {
+  padding-top: 10px;
+}
+
+blockquote p:first-child:before {
+  content: 'Note ';
+  padding-right: 5px;
+  color: #c77d01;
+  text-transform: uppercase;
+  font-weight: 600;
+  /* padding-top: 20px; */
 }
 
 aside {
@@ -65,7 +121,7 @@ aside h1 {
   background: #f49600;
   color: white;
   text-transform: none;
-  
+
   padding: 0 0.6em;
   margin: 0;
   font-size: 1.3em;
@@ -91,4 +147,55 @@ code {
   color: #c77d01;
   font-size: 1.2em;
   font-family: monospace;
+}
+
+@media only screen and (max-width : 1024px) {
+  body > *,
+  body > p {
+    margin-right: 40px;
+  }
+}
+
+@media only screen and (max-width : 769px) {
+  h1 {
+    padding-top: 40px;
+    font-size: 32px;
+  }
+
+  h2 {
+    font-size: 1.7em;
+  }
+
+  body > * {
+    margin-left: 0;
+    margin-right: 0;
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+
+  body > p {
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  aside {
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 0;
+  }
+}
+
+@media only screen and (min-width : 769px) {
+  blockquote {
+    float: left;
+    width: 200px;
+    margin-right: 20px;
+
+    margin-left: 20px;
+    margin-top: -20px;
+  }
+
+  blockquote:before {
+    margin-top: 12px;
+  }
 }
