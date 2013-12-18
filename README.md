@@ -22,6 +22,12 @@ git checkout -b feature/book
 
 Now you have the `feature/book` branch (and you're commiting to a branch by the same name).
 
+Once you've made a change, push it back to the repository using:
+
+```bash
+git push origin feature/book
+```
+
 ## Markdown format
 
 It's easiest to look at [chapter 1](https://raw.github.com/remy/introducinghtml5/feature/book/chapters/1.md) as the example.
