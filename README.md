@@ -142,3 +142,13 @@ node bin/format.js chapters/5.md
 ```
 
 You should be able to run this multiple times and it won't affect the formatting, but a backup is created just in case (note that these are not in git and can be removed if you don't need them).
+
+## Heroku
+
+TODO get heroku set up
+
+To push:
+
+```
+git push heroku feature/book:master
+```
