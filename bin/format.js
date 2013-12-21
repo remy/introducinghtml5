@@ -12,10 +12,10 @@ if (!file || !fs.existsSync(filename)) {
 
 var content = fs.readFileSync(filename, 'utf8');
 
-fs.writeFileSync(filename + Date.now(), content, 'utf8');
+fs.writeFileSync(filename + '-backup' + Date.now(), content, 'utf8');
 
 var incode = false;
-var ignoreWords = 'iPhone JavaScript fillStyle fillRect strokeRect strokeStyle FlashCanvas';
+var ignoreWords = 'currentTime iPhone JavaScript FlashCanvas APIs'.split(' ');
 var lines = content.split('\n');
 
 content = lines.map(function (line, i) {
@@ -40,6 +40,7 @@ content = lines.map(function (line, i) {
   // objects from pdfs
   line = line.replace(/￼/g, '');
 
+  line = line.replace(/• /g, '- ');
 
   // ignore formatting whilst inside code blocks
   if (incode) {
@@ -51,16 +52,15 @@ content = lines.map(function (line, i) {
   line = line.replace(/—/g, '--');
 
   // add blank lines for paragraphs
-  if (i < lines.length -1 && lines[i+1].trim() !== '') {
-    console.log(i);
+  if (i < lines.length -1 && lines[i+1].trim() !== '' && line.indexOf('- ') !== 0) {
     line += '\n';
   }
 
   // linkify
   // http[\w#!:.?+=&%@!\-\/]+\s
-  line = line.replace(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/g, function (m) {
-    console.log(m);
-    if (m.substr(0, 1) === '[') { // already markdown
+  line = line.replace(/.((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/g, function (m) {
+    var c = m.substr(0, 1);
+    if (c === '[' || c === '(') { // already markdown
       return m;
     }
 
@@ -73,10 +73,19 @@ content = lines.map(function (line, i) {
   });
 
   // sometimes there's formatting errors like "INTRoDUCiNG" so flag these up
-  line = line.replace(/\b(\w+[A-Z]\w*)\b/g, function (m) {
-    if (m.indexOf('__') === 0) {
+  line = line.replace(/([\s|`])?(\w+[A-Z]\w*)\b/g, function (m, space, word) {
+    if (word.indexOf('__') === 0) {
       // we've done this word already, so skip it (in case we re-run)
       return m;
+    }
+
+    // ignore code string
+    if (space === '`') {
+      return m;
+    }
+
+    if (word === 'FIguRE') {
+      return 'Figure';
     }
 
     var letters = m.replace(/[^a-z]/ig, ''),
@@ -93,14 +102,21 @@ content = lines.map(function (line, i) {
       }
     }
 
-    if (!allupper && ignoreWords.indexOf(m) === -1) {
+    if (!allupper && ignoreWords.indexOf(word) === -1) {
       console.log(m);
-      return '__' + m + '__';
+      return (space||'') + '__' + m.trim() + '__';
     } else {
       return m;
     }
   });
 
+
+  // figure line
+  if (line.indexOf('Figure') === 0 && lines[i - 1].indexOf('{{') !== 0 && lines[i - 2].indexOf('{{') !== 0) {
+    line = line.replace(/Figure (\d+\.\d+)(.*)/, function (all, fignum) {
+      return '{{figure ' + fignum + '\n' + all + '\n}}';
+    });
+  }
 
   return line;
 }).join('\n');
