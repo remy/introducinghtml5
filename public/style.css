@@ -88,7 +88,7 @@ blockquote {
 
 blockquote:before {
   content: ' ';
-  background: url(/quote.png) no-repeat;
+  background: url(/images/quote.png) no-repeat;
   display: block;
   height: 45px;
   width: 40px;

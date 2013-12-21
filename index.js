@@ -4,7 +4,7 @@ var express = require('express'),
     Showdown = require('showdown'),
     extensions = require('./lib/mdExtensions'),
     converter = new Showdown.converter({
-      extensions: [extensions.dash, extensions.quotes, extensions.aside]
+      extensions: [extensions.dash, extensions.quotes, extensions.aside, extensions.figure]
     }),
     fs = require('fs'),
     path = require('path'),
@@ -29,7 +29,7 @@ app.configure(function () {
 app.configure('development', function () {
   // TODO generate this to static assets
   app.get('/chapter/:chapter', function (req, res, next) {
-    var chapter = parseInt(req.params.chapter) || 1;
+    var chapter = req.params.chapter; //parseInt(req.params.chapter) || 1;
     fs.readFile(path.join('chapters', chapter + '.md'), 'utf8', function (err, content) {
       if (err) {
         return res.status(404).send('Not found');

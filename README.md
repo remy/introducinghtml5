@@ -94,6 +94,20 @@ Then regular sytnax is allowed inside. But then we have to close off with two } 
 }}
 ```
 
+### Figures
+
+Uses special sytnax:
+
+```
+{{figure 5.1
+  Figure 5.1 This is the nice example of a canvas demo
+}}
+```
+
+The renderer will automatically style this as a figure element with an image and `figcaption`, and will look for the figure image inside the `images/figures` directory as `fig0501.png` (note that we'll convert .bmp images to .png for release).
+
+The figure also has an `id` attached as `fig0501` so we can link to the figures.
+
 ### Dashes
 
 Hyphen's a dashes are supported. A hyphen is simply `-` and a dash is `--`.
@@ -103,6 +117,7 @@ Note that the PDF includes lots of hyphen characters (and some other odd charact
 ### Quotes
 
 Ensure "special" quotes are not used. Replace all these with single quotations or double quotations. The renderer will replace these upon render so they look nice.
+
 
 ## Node
 
@@ -116,3 +131,14 @@ node .
 Now visit http://localhost:8000/chapter/1 in your browser. Note that you'll need to navigate the urls manually.
 
 
+## Formatting tool
+
+Once you've copied a section of the book, you can format the markdown file to help automate some of the manual style fix process.
+
+To do this, from the `introducinghtml5` directory, run the following command (to format chapter 5 for example - obviously change this for your own chapter):
+
+```bash
+node bin/format.js chapters/5.md
+```
+
+You should be able to run this multiple times and it won't affect the formatting, but a backup is created just in case (note that these are not in git and can be removed if you don't need them).
