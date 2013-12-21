@@ -14,44 +14,97 @@ var content = fs.readFileSync(filename, 'utf8');
 
 fs.writeFileSync(filename + Date.now(), content, 'utf8');
 
-// replace quotes
-content = content.replace(/’/g, '\'');
+var incode = false;
+var ignoreWords = 'iPhone JavaScript fillStyle fillRect strokeRect strokeStyle FlashCanvas';
+var lines = content.split('\n');
 
-content = content.replace(/[“”]/g, '"');
-
-// strip dashes
-content = content.replace(/(.)- /g, '$1');
-content = content.replace(/—/g, '--');
-
-// add blank lines for paragraphs
-content = content.replace(/(\n\n)/g, '^^');
-content = content.replace(/\n/g, '\n\n');
-content = content.replace(/(\^\^)/g, '\n\n');
-
-var ignoreWords = ['iPhone'];
-
-content = content.replace(/\b(\w+[A-Z]\w*)\b/g, function (m) {
-  var letters = m.replace(/[^a-z]/ig, ''),
-      allupper = true;
-  for (var i = 0; i < letters.length; i++) {
-    if (letters.substr(i, 1) === letters.substr(i, 1).toUpperCase()) {
-      allupper = true;
-    } else {
-      allupper = false;
-    }
-
-    if (allupper === false) {
-      break;
-    }
+content = lines.map(function (line, i) {
+  // skip blank lines
+  if (line.trim() === '') {
+    return line;
   }
 
-  if (!allupper && ignoreWords.indexOf(m) === -1) {
+  if (line.indexOf('```') === 0) {
+    incode = !incode;
+  }
+
+  // replace quotes
+  line = line.replace(/[’‘]/g, '\'');
+
+  line = line.replace(/[“”]/g, '"');
+
+
+  // line separators
+  line = line.replace(/ ¬ /g, '\n');
+
+  // objects from pdfs
+  line = line.replace(/￼/g, '');
+
+
+  // ignore formatting whilst inside code blocks
+  if (incode) {
+    return line;
+  }
+
+  // strip dashes
+  line = line.replace(/(.)- /g, '$1');
+  line = line.replace(/—/g, '--');
+
+  // add blank lines for paragraphs
+  if (i < lines.length -1 && lines[i+1].trim() !== '') {
+    console.log(i);
+    line += '\n';
+  }
+
+  // linkify
+  // http[\w#!:.?+=&%@!\-\/]+\s
+  line = line.replace(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/g, function (m) {
     console.log(m);
-    return '__' + m + '__';
-  } else {
-    return m;
-  }
-});
+    if (m.substr(0, 1) === '[') { // already markdown
+      return m;
+    }
+
+    if (m.slice(-1) === '.') {
+      m = m.slice(0, -1);
+      return '[' + m + '](' + m + ').';
+    }
+
+    return '[' + m + '](' + m + ')';
+  });
+
+  // sometimes there's formatting errors like "INTRoDUCiNG" so flag these up
+  line = line.replace(/\b(\w+[A-Z]\w*)\b/g, function (m) {
+    if (m.indexOf('__') === 0) {
+      // we've done this word already, so skip it (in case we re-run)
+      return m;
+    }
+
+    var letters = m.replace(/[^a-z]/ig, ''),
+        allupper = true;
+    for (var i = 0; i < letters.length; i++) {
+      if (letters.substr(i, 1) === letters.substr(i, 1).toUpperCase()) {
+        allupper = true;
+      } else {
+        allupper = false;
+      }
+
+      if (allupper === false) {
+        break;
+      }
+    }
+
+    if (!allupper && ignoreWords.indexOf(m) === -1) {
+      console.log(m);
+      return '__' + m + '__';
+    } else {
+      return m;
+    }
+  });
+
+
+  return line;
+}).join('\n');
+
 
 fs.writeFile(filename, content, 'utf8');
 console.log('Done');
