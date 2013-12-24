@@ -54,15 +54,22 @@ ul, ol {
 }
 
 li {
-  list-style: none;
   padding-left: 10px;
   line-height: 1.4em;
   margin: 10px;
   margin-right: 0;
 }
 
-li:before {
+ul li:before {
+  list-style: none;
   content: "• ";
+}
+
+ol li {
+  margin-left: 30px;
+}
+
+li:before {
   color: #f49600;
   display: block;
   position: relative;

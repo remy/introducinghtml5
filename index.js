@@ -4,7 +4,7 @@ var express = require('express'),
     Showdown = require('showdown'),
     extensions = require('./lib/mdExtensions'),
     converter = new Showdown.converter({
-      extensions: [extensions.dash, extensions.quotes, extensions.aside, extensions.figure]
+      extensions: [extensions.dash, extensions.quotes, extensions.aside, extensions.figure, extensions.ellipsis]
     }),
     fs = require('fs'),
     path = require('path'),

@@ -15,7 +15,7 @@ var content = fs.readFileSync(filename, 'utf8');
 fs.writeFileSync(filename + '-backup' + Date.now(), content, 'utf8');
 
 var incode = false;
-var ignoreWords = 'currentTime iPhone JavaScript FlashCanvas APIs URLs iVBORw0KGgoAAAANSUhEUgAAAAoAAAAK jQuery'.split(' ');
+var ignoreWords = 'currentTime iPhone JavaScript FlashCanvas APIs URLs iVBORw0KGgoAAAANSUhEUgAAAAoAAAAK jQuery preventDefault'.split(' ');
 var lines = content.split('\n');
 
 content = lines.map(function (line, i) {
