@@ -94,8 +94,9 @@ figure {
 figure > img {
   max-width: 100%;
   display: block;
-  padding-left: 20%;
+  margin-left: 20%;
   max-height: 600px;
+  border: 1px solid #ccc;
 }
 
 figure > figcaption {
