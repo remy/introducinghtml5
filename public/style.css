@@ -60,8 +60,11 @@ li {
   margin-right: 0;
 }
 
-ul li:before {
+ul li {
   list-style: none;
+}
+
+ul li:before {
   content: "• ";
 }
 
