@@ -23,13 +23,15 @@ body > * {
 
 h1 {
   background: #6d4a1d;
-  color: #e8993b;
+  color: #E8993B;
   text-transform: uppercase;
-  padding-top: 100px;
-  font-size: 60px;
+  padding-top: 80px;
+  font-size: 120px;
   margin: 0;
   padding-left: 40px;
-  margin-bottom: 1em;
+  margin-bottom: 0.5em;
+  line-height: 1em;
+  border-bottom: 10px solid #CC8838;
 }
 
 h2 {
@@ -39,6 +41,7 @@ h2 {
   font-weight: 400;
   font-size: 3em;
   margin-right: 0;
+  overflow: hidden;
 }
 
 h2:hover:after {
@@ -82,9 +85,7 @@ li:before {
   top: -0px;
 }
 
-body > p,
-body > pre,
-h3 {
+body > p, body > pre, h3, h4, h5 {
   margin-left: 20%;
 /*   margin-right: 40px; */
   line-height: 1.8em;
@@ -93,12 +94,37 @@ h3 {
 /*   max-width: 900px; */
 }
 
+pre {
+  /* overflow-x: scroll; */
+  border: 0.2em solid rgba(204, 204, 204, 0.5);
+  padding: 1em;
+  margin-right: 12.4em;
+  background: rgba(250, 250, 250, 0.5);
+  border-radius: 3px;
+  position: relative;
+}
+
+pre code {
+  overflow-x: scroll;
+  width: 100%;
+  display: block;
+  text-overflow: ellipsis;
+}
+
+pre:hover code,
+pre:focus code{
+  text-overflow: inherit;
+}
+
 li {
   margin-right: 10em;
 }
 
 figure {
   position: relative;
+  clear: left;
+  margin-left: 0;
+  width: 100%;
 }
 
 figure > img {
@@ -118,6 +144,8 @@ figure > figcaption {
   position: absolute;
   top: 0;
   width: 18%;
+  clear: left;
+  margin-left: 20px;
 }
 
 figcaption:first-word {
@@ -130,7 +158,7 @@ blockquote {
 }
 
 blockquote:before {
-  content: ' ';
+  /* content: ' '; */
   background: url(/images/quote.png) no-repeat;
   display: block;
   height: 45px;
@@ -169,6 +197,7 @@ aside h1 {
   margin: 0;
   font-size: 1.3em;
   line-height: 1.6em;
+  border-bottom: 0;
 }
 
 aside > * {
@@ -190,6 +219,7 @@ code {
   color: #c77d01;
   font-size: 1.2em;
   font-family: monospace;
+  overflow-x: hidden;
 }
 
 @media only screen and (max-width : 1024px) {
@@ -236,6 +266,13 @@ code {
 
     margin-left: 20px;
     margin-top: -20px;
+  
+    clear: both;
+    overflow: hidden;
+}
+
+  h2 + blockquote {
+    padding-top: 15px;
   }
 
   blockquote:before {

@@ -3,9 +3,8 @@ var express = require('express'),
     // markdown = require('markdown').markdown,
     Showdown = require('showdown'),
     extensions = require('./lib/mdExtensions'),
-    converter = new Showdown.converter({
-      extensions: [extensions.dash, extensions.quotes, extensions.aside, extensions.figure, extensions.ellipsis]
-    }),
+    converter = new Showdown.converter(
+      { extensions: [extensions.dash, extensions.quotes, extensions.aside, extensions.figure, extensions.ellipsis, extensions.figureLink] }),
     fs = require('fs'),
     path = require('path'),
     app = express();
