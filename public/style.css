@@ -13,33 +13,62 @@ body {
   padding: 0;
   font-family: 'helvetica neue';
   font-weight: 200;
-  font-size: 125%;
+  font-size: 22px;
+}
+
+p, li {
+  font-family: Georgia,Cambria,"Times New Roman",Times,serif;
+  color: #333332;
+  letter-spacing: .01rem;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: avenir, 'avenir next', helvetica, arial, sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-style: normal;
+/*   letter-spacing: -0.04em; */
+  line-height: 1.2;
+}
+
+blockquote p {
+  font-size: 16px;
+}
+
+p code {
+  font-size: 21px;
+  font-weight: bold;
 }
 
 body > * {
   margin-left: 40px;
-  margin-right: 10em;
+  margin-right: 15em;
 }
 
 h1 {
-  background: #6d4a1d;
-  color: #E8993B;
+  background: #431818;
+  color: #FF851B;
   text-transform: uppercase;
   padding-top: 80px;
-  font-size: 120px;
+  font-size: 42px;
   margin: 0;
   padding-left: 40px;
   margin-bottom: 0.5em;
   line-height: 1em;
-  border-bottom: 10px solid #CC8838;
+  border-bottom: 3px solid #FF851B;
+  padding-bottom: 40px;
 }
 
 h2 {
   color: #916125;
   margin-top: 2em;
   margin-bottom: 0em;
-  font-weight: 400;
-  font-size: 3em;
+  /* font-weight: 400; */
+/*   font-size: 3em; */
   margin-right: 0;
   overflow: hidden;
 }
@@ -60,6 +89,7 @@ li {
   padding-left: 10px;
   line-height: 1.4em;
   margin: 10px;
+  margin-left: 40px;
   margin-right: 0;
 }
 
@@ -68,7 +98,7 @@ ul li {
 }
 
 ul li:before {
-  content: "• ";
+  content: " "
 }
 
 ol li {
@@ -76,13 +106,18 @@ ol li {
 }
 
 li:before {
-  color: #f49600;
+  /* color: #f49600; */
   display: block;
   position: relative;
-  max-width: 0px;
-  max-height: 0px;
+  /* max-width: 0px; */
+  /* max-height: 0px; */
   left: -20px;
-  top: -0px;
+  top: 20px;
+  border: 1px solid #FF851B;
+  background: #FF851B;
+  width: 8px;
+  height: 8px;
+  border-radius: 100px;
 }
 
 body > p, body > pre, h3, h4, h5 {
@@ -99,8 +134,8 @@ pre {
   border: 0.2em solid rgba(204, 204, 204, 0.5);
   padding: 1em;
   margin-right: 12.4em;
-  background: rgba(250, 250, 250, 0.5);
-  border-radius: 3px;
+  background: rgba(221, 221, 221, 0.1);
+  /* border-radius: 3px; */
   position: relative;
 }
 
@@ -117,7 +152,7 @@ pre:focus code{
 }
 
 li {
-  margin-right: 10em;
+  margin-right: 20em;
 }
 
 figure {
@@ -158,7 +193,7 @@ blockquote {
 }
 
 blockquote:before {
-  /* content: ' '; */
+  content: ' ';
   background: url(/images/quote.png) no-repeat;
   display: block;
   height: 45px;
@@ -217,7 +252,7 @@ a {
 
 code {
   color: #c77d01;
-  font-size: 1.2em;
+  font-size: 0.9em;
   font-family: monospace;
   overflow-x: hidden;
 }
