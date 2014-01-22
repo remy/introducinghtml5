@@ -26,16 +26,7 @@ p, li {
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: avenir, 'avenir next', helvetica, arial, sans-serif;
-  font-weight: bold;
-  text-transform: uppercase;
-  font-style: normal;
-/*   letter-spacing: -0.04em; */
-  line-height: 1.2;
-}
-
-blockquote p {
+blockquote p, figcaption p {
   font-size: 16px;
 }
 
@@ -49,22 +40,32 @@ body > * {
   margin-right: 15em;
 }
 
-h1 {
-  background: #431818;
-  color: #FF851B;
+h1, h2, h3, h4, h5, h6 {
+  font-family: avenir, 'avenir next', helvetica, arial, sans-serif;
+  font-weight: bold;
   text-transform: uppercase;
-  padding-top: 80px;
-  font-size: 42px;
+  font-style: normal;
+/*   letter-spacing: -0.04em; */
+  line-height: 1.2;
+}
+
+body > h1 {
+  background: #111111;
+  color: #2ECC40;
+  text-transform: none;
+  text-align: right;
+  padding-top: 350px;
+  font-size: 150px;
   margin: 0;
-  padding-left: 40px;
+  padding-right: 100px;
   margin-bottom: 0.5em;
   line-height: 1em;
-  border-bottom: 3px solid #FF851B;
-  padding-bottom: 40px;
+/*   border-bottom: 3px solid #FF851B; */
+  padding-bottom: 150px;
 }
 
 h2 {
-  color: #916125;
+  color: #2ECC40;
   margin-top: 2em;
   margin-bottom: 0em;
   /* font-weight: 400; */
@@ -73,10 +74,23 @@ h2 {
   overflow: hidden;
 }
 
-h2:hover:after {
-  content: '  #' attr(id);
+a.permalink {
+  padding: 10px;
+  padding-bottom: 0;  
+  margin-left: 10px;
+  position: absolute;
+  /* background: red; */
+  text-decoration: none;
   font-size: 14px;
-  color: #f49600;
+  display: none;
+  text-transform: uppercase;
+  line-height: 2;
+}
+
+h2:hover a.permalink,
+h3:hover a.permalink,
+h4:hover a.permalink {
+  display: inline;
 }
 
 ul, ol {
@@ -113,10 +127,10 @@ li:before {
   /* max-height: 0px; */
   left: -20px;
   top: 20px;
-  border: 1px solid #FF851B;
-  background: #FF851B;
-  width: 8px;
-  height: 8px;
+  /* border: 1px solid #2ECC40; */
+  background: hsl(127, 55%, 44%);
+  width: 10px;
+  height: 10px;
   border-radius: 100px;
 }
 
@@ -131,10 +145,10 @@ body > p, body > pre, h3, h4, h5 {
 
 pre {
   /* overflow-x: scroll; */
-  border: 0.2em solid rgba(204, 204, 204, 0.5);
+  /* border: 0.2em solid rgba(204, 204, 204, 0.5); */
   padding: 1em;
   margin-right: 12.4em;
-  background: rgba(221, 221, 221, 0.1);
+  background: hsla(0, 0%, 67%, 0.1);
   /* border-radius: 3px; */
   position: relative;
 }
@@ -192,6 +206,7 @@ blockquote {
   line-height: 1.6em
 }
 
+/*
 blockquote:before {
   content: ' ';
   background: url(/images/quote.png) no-repeat;
@@ -205,27 +220,28 @@ blockquote:before {
 blockquote p:first-child {
   padding-top: 10px;
 }
+*/
 
 blockquote p:first-child:before {
   content: 'Note ';
   padding-right: 5px;
-  color: #c77d01;
+  color: #38B447;
   text-transform: uppercase;
   font-weight: 600;
   /* padding-top: 20px; */
 }
 
 aside {
-  border: 3px solid #f49600;
+  border: 3px solid #2ECC40;
   border-radius: 5px;
   margin-bottom: 2em;
   margin-top: 2em;
-  background: #fff2de;
+  background: hsl(127, 50%, 99%);
 }
 
 aside h1 {
-  background: #f49600;
-  color: white;
+  background: #2ECC40;
+  color: #fff;
   text-transform: none;
 
   padding: 0 0.6em;
@@ -246,12 +262,12 @@ aside p {
 }
 
 a {
-  color: #72490d;
+  color: hsl(127, 63%, 29%);
   font-weight: 500;
 }
 
 code {
-  color: #c77d01;
+  color: hsl(127, 61%, 41%);
   font-size: 0.9em;
   font-family: monospace;
   overflow-x: hidden;
@@ -300,7 +316,7 @@ code {
     margin-right: 20px;
 
     margin-left: 20px;
-    margin-top: -20px;
+    margin-top: -5px;
   
     clear: both;
     overflow: hidden;
@@ -311,6 +327,6 @@ code {
   }
 
   blockquote:before {
-    margin-top: 12px;
+    /* margin-top: 12px; */
   }
 }
