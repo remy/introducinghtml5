@@ -76,7 +76,7 @@ h2 {
 
 a.permalink {
   padding: 10px;
-  padding-bottom: 0;  
+  padding-bottom: 0;
   margin-left: 10px;
   position: absolute;
   /* background: red; */
@@ -140,7 +140,7 @@ body > p, body > pre, h3, h4, h5 {
   line-height: 1.8em;
   margin-top: 1em;
   margin-bottom: 1em;
-/*   max-width: 900px; */
+  max-width: 800px;
 }
 
 pre {
@@ -237,6 +237,7 @@ aside {
   margin-bottom: 2em;
   margin-top: 2em;
   background: hsl(127, 50%, 99%);
+  max-width: 1200px;
 }
 
 aside h1 {
@@ -317,7 +318,7 @@ code {
 
     margin-left: 20px;
     margin-top: -5px;
-  
+
     clear: both;
     overflow: hidden;
 }
