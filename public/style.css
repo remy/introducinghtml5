@@ -27,12 +27,16 @@ p, li {
 }
 
 blockquote p, figcaption p {
-  font-size: 16px;
+  font-size: 80%;
 }
 
 p code {
   font-size: 21px;
   font-weight: bold;
+}
+
+blockquote p code, figcaption p code {
+  font-size: 100%;
 }
 
 body > * {
@@ -134,7 +138,7 @@ li:before {
   border-radius: 100px;
 }
 
-body > p, body > pre, h3, h4, h5 {
+body > p, body > pre, h3, h4, h5, body > table {
   margin-left: 20%;
 /*   margin-right: 40px; */
   line-height: 1.8em;
@@ -157,7 +161,7 @@ pre code {
   overflow-x: scroll;
   width: 100%;
   display: block;
-  text-overflow: ellipsis;
+  /*text-overflow: ellipsis;*/
 }
 
 pre:hover code,
@@ -330,4 +334,44 @@ code {
   blockquote:before {
     /* margin-top: 12px; */
   }
+}
+
+table {
+  border-top: 1px solid #3e96cb;
+  border-bottom: 1px solid #3e96cb;
+  border-collapse: collapse;
+  font-size: 75%;
+  min-width: 694px;
+}
+
+td, td p {
+  font-family: sans-serif;
+}
+
+thead {
+  text-transform: uppercase;
+  /*font-size: 70%;*/
+  padding: 10px;
+  border-bottom: 1px solid #3e96cb;
+}
+
+th {
+  background: #e6f2f9;
+}
+
+tr {
+  border-bottom: 1px solid #cde5f2;
+}
+
+tr:last-child,
+tr[data-span] {
+  border-bottom: none;
+}
+
+td:first-child {
+  padding-right: 30px;
+}
+
+tbody td {
+  vertical-align: top;
 }
