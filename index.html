@@ -1,38 +1,38 @@
-<!DOCTYPE html> 
-<html lang="en"> 
-<head> 
-<meta charset=utf-8 /> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset=utf-8 />
 <!-- <meta name="viewport" content="width=device-width" />  -->
 <meta name="viewport" content="width=640" />
-<title>Introducing HTML5: Bruce Lawson and Remy Sharp</title> 
+<title>Introducing HTML5: Bruce Lawson and Remy Sharp</title>
 <link rel="stylesheet" href="ih5.css" type="text/css" />
-</head> 
-<body> 
-<header> 
-<hgroup> 
-<h1><span class="introducing">Introducing</span> <span class="html5">HTML<span>5</span></span></h1> 
-<h2>By Bruce Lawson and Remy Sharp</h2> 
-</hgroup> 
-</header> 
-<p class=update>The second edition is out, swollen from 223 pages to a tumescent 295 pages! The multimedia chapter has added information on &lt;track&gt;, getUserMedia, webRTC. There's even more detail about how to get more out of geolocation; more storage methods and techniques, including the new IndexedDB storage API; 
+</head>
+<body>
+<header>
+<hgroup>
+<h1><span class="introducing">Introducing</span> <span class="html5">HTML<span>5</span></span></h1>
+<h2>By Bruce Lawson and Remy Sharp</h2>
+</hgroup>
+</header>
+<p class=update>The second edition is out, swollen from 223 pages to a tumescent 295 pages! The multimedia chapter has added information on &lt;track&gt;, getUserMedia, webRTC. There's even more detail about how to get more out of geolocation; more storage methods and techniques, including the new IndexedDB storage API;
 we now have full examples on how to use Server Sent Events, and updated detail on offline applications, gotchas and debugging tips. There's a brand new full chapter on polyfills, what they are, how they work and how to use them!</p>
-<p>We&rsquo;re not one of the HTML 5 spec writers, and we&rsquo;re not here to persuade you to use it. Our take is that it&rsquo;s going to happen, so we need to get acquainted. But we&rsquo;re going to point out (perhaps rant) about the good parts as well as the bad. It&rsquo;s as far as possible a practical book, showing you how to use the language but some areas of the spec will be discussed theoretically as they&rsquo;re not yet implemented anywhere.</p> 
+<p>We&rsquo;re not one of the HTML 5 spec writers, and we&rsquo;re not here to persuade you to use it. Our take is that it&rsquo;s going to happen, so we need to get acquainted. But we&rsquo;re going to point out (perhaps rant) about the good parts as well as the bad. It&rsquo;s as far as possible a practical book, showing you how to use the language but some areas of the spec will be discussed theoretically as they&rsquo;re not yet implemented anywhere.</p>
 <div class="bookinfo">
-  <a href="http://www.amazon.com/gp/product/0321687299?ie=UTF8&amp;tag=inht-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=0321687299"><img alt="Buy Introducing HTML5 by Bruce Lawson and Remy Sharp" title="Buy Introducing HTML5 by Bruce Lawson and Remy Sharp" src="book_m.jpg" /></a> 
-  <p>Order the book now on:</p> 
+  <a href="http://www.amazon.com/gp/product/0321687299?ie=UTF8&amp;tag=inht-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=0321687299"><img alt="Buy Introducing HTML5 by Bruce Lawson and Remy Sharp" title="Buy Introducing HTML5 by Bruce Lawson and Remy Sharp" src="book_m.jpg" /></a>
+  <p>Order the book now on:</p>
   <ul>
     <li>
-<a href="http://www.amazon.com/gp/product/0321784421/ref=as_li_tf_tl?ie=UTF8&tag=inht-20&linkCode=as2&camp=217145&creative=399373&creativeASIN=0321784421">Amazon</a><img src="http://www.assoc-amazon.com/e/ir?t=inht-20&l=as2&o=1&a=0321784421&camp=217145&creative=399373" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
-(<a href="http://www.amazon.com/gp/product/B005OR9MJY/ref=as_li_tf_tl?ie=UTF8&tag=inht-20&linkCode=as2&camp=217145&creative=399373&creativeASIN=B005OR9MJY">ePub version</a><img src="http://www.assoc-amazon.com/e/ir?t=inht-20&l=as2&o=1&a=B005OR9MJY&camp=217145&creative=399373" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />)
-    <li><a href="http://www.amazon.co.uk/gp/product/0321784421/ref=as_li_tf_tl?ie=UTF8&tag=inht-21&linkCode=as2&camp=1634&creative=6738&creativeASIN=0321784421">Amazon UK</a><img src="http://www.assoc-amazon.co.uk/e/ir?t=inht-21&l=as2&o=2&a=0321784421" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
-(<a href="http://www.amazon.co.uk/gp/product/B005OR9MJY/ref=as_li_tf_tl?ie=UTF8&tag=inht-21&linkCode=as2&camp=1634&creative=6738&creativeASIN=B005OR9MJY">ePub version</a><img src="http://www.assoc-amazon.co.uk/e/ir?t=inht-21&l=as2&o=2&a=B005OR9MJY" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />)
+<a href="http://www.amazon.com/gp/product/0321784421/ref=as_li_tf_tl?ie=UTF8&tag=inht-20&linkCode=as2&camp=217145&creative=399373&creativeASIN=0321784421">Amazon</a><img src="https://www.assoc-amazon.com/e/ir?t=inht-20&l=as2&o=1&a=0321784421&camp=217145&creative=399373" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+(<a href="http://www.amazon.com/gp/product/B005OR9MJY/ref=as_li_tf_tl?ie=UTF8&tag=inht-20&linkCode=as2&camp=217145&creative=399373&creativeASIN=B005OR9MJY">ePub version</a><img src="https://www.assoc-amazon.com/e/ir?t=inht-20&l=as2&o=1&a=B005OR9MJY&camp=217145&creative=399373" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />)
+    <li><a href="http://www.amazon.co.uk/gp/product/0321784421/ref=as_li_tf_tl?ie=UTF8&tag=inht-21&linkCode=as2&camp=1634&creative=6738&creativeASIN=0321784421">Amazon UK</a><img src="https://www.assoc-amazon.co.uk/e/ir?t=inht-21&l=as2&o=2&a=0321784421" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+(<a href="http://www.amazon.co.uk/gp/product/B005OR9MJY/ref=as_li_tf_tl?ie=UTF8&tag=inht-21&linkCode=as2&camp=1634&creative=6738&creativeASIN=B005OR9MJY">ePub version</a><img src="https://www.assoc-amazon.co.uk/e/ir?t=inht-21&l=as2&o=2&a=B005OR9MJY" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />)
     <li><a href="http://click.linksynergy.com/fs-bin/click?id=/YFbU69Mlqc&amp;offerid=145244.1404575&amp;type=2&amp;subid=0">PeachPit</a><img border="0" width="1" height="1" style="border:none !important; margin:0px !important;" src="http://ad.linksynergy.com/fs-bin/show?id=/YFbU69Mlqc&amp;bids=145244.1404575&amp;type=2&amp;subid=0" /> (<a href="http://click.linksynergy.com/fs-bin/click?id=/YFbU69Mlqc&amp;offerid=145244.1439274&amp;type=2&amp;subid=0">ePub version</a><img border="0" width="1" height="1" src="http://ad.linksynergy.com/fs-bin/show?id=/YFbU69Mlqc&amp;bids=145244.1439274&amp;type=2&amp;subid=0" style="border:none !important; margin:0px !important;"/>)</li>
     <li><a href="http://search.barnesandnoble.com/Introducing-HTML5/Bruce-Lawson/e/9780321784421/?itm=2&amp;USRI=html5">Barnes &amp; Noble</a></li>
-  </ul> 
-  <p>Follow the authors: <a href="http://twitter.com/brucel">@brucel</a> &amp; <a href="http://twitter.com/rem">@rem</a></p> 
-</div> 
- 
-<h2>Chapters and Resources</h2> 
+  </ul>
+  <p>Follow the authors: <a href="http://twitter.com/brucel">@brucel</a> &amp; <a href="http://twitter.com/rem">@rem</a></p>
+</div>
+
+<h2>Chapters and Resources</h2>
 <table>
   <thead>
     <tr>
@@ -44,72 +44,72 @@ we now have full examples on how to use Server Sent Events, and updated detail o
   </thead>
   <tbody>
     <tr>
-      <td>Introduction: why HTML5 exists</td> 
+      <td>Introduction: why HTML5 exists</td>
       <td></td>
       <td><a href="/links/intro.html">links</a></td>
       <td></td>
     </tr>
     <tr>
-      <td>Structuring a page</td> 
+      <td>Structuring a page</td>
       <td></td>
       <td><a href="/links/ch01.html">links</a></td>
       <td><a href="/errata/ch01.html">errata</a></td>
     </tr>
     <tr>
-      <td>Marking up a blog &amp; the outlining algorithm</td> 
+      <td>Marking up a blog &amp; the outlining algorithm</td>
       <td><a href="/examples/ch02/">examples</a></td>
       <td><a href="/links/ch02.html">links</a></td>
       <td><a href="/errata/ch02.html">errata</a></td>
     </tr>
     <tr>
-      <td>Forms</td> 
+      <td>Forms</td>
       <td><a href="/examples/ch03/">examples</a></td>
       <td><a href="/links/ch03.html">links</a></td>
       <td></td>
     </tr>
     <tr>
-      <td>Multimedia (video, audio) markup and APIs</td> 
+      <td>Multimedia (video, audio) markup and APIs</td>
       <td><a href="/examples/ch04/">examples</a></td>
       <td><a href="/links/ch04.html">links</a></td>
       <td></td>
     </tr>
     <tr>
-      <td>Canvas</td> 
+      <td>Canvas</td>
       <td><a href="/examples/ch05/">examples</a></td>
       <td><a href="/links/ch05.html">links</a></td>
       <td></td>
     </tr>
     <tr>
-      <td>Storage</td> 
+      <td>Storage</td>
       <td><a href="/examples/ch06/">examples</a></td>
       <td><a href="/links/ch06.html">links</a></td>
       <td></td>
     </tr>
     <tr>
-      <td>Working Offline</td> 
+      <td>Working Offline</td>
       <td><a href="/examples/ch07/">examples</a></td>
       <td><a href="/links/ch07.html">links</a></td>
       <td></td>
     </tr>
     <tr>
-      <td>Drag &amp; Drop</td> 
+      <td>Drag &amp; Drop</td>
       <td><a href="/examples/ch08/">examples</a></td>
       <td><a href="/links/ch08.html">links</a></td>
       <td></td>
     </tr>
     <tr>
-      <td>Geolocation</td> 
+      <td>Geolocation</td>
       <td></td>
       <td><a href="/links/ch09.html">links</a></td>
       <td></td>
     </tr>
     <tr>
-      <td>Messages, Web Workers &amp; Web Sockets</td> 
+      <td>Messages, Web Workers &amp; Web Sockets</td>
       <td><a href="/examples/ch10/">examples</a></td>
       <td><a href="/links/ch10.html">links</a></td>
       <td></td>
     </tr>
-    
+
   </tbody>
 </table>
 <footer><p>Errata notice: If you spot any simple typos, please email <a href="mailto:errata@peachpit.com?subject=Introducing%20HTML5%20typo">errata@peachpit.com</a>. If you find a content error, please mail <a href="mailto:authors@introducinghtml5.com">authors@introducinghtml5.com</a>.</p></footer>
@@ -126,5 +126,5 @@ we now have full examples on how to use Server Sent Events, and updated detail o
   })();
 
 </script>
-</body> 
+</body>
 </html>
