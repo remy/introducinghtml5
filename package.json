@@ -1,0 +1,28 @@
+{
+  "name": "introducinghtml5",
+  "version": "0.0.1",
+  "description": "Introducing HTML5 server",
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/remy/introducinghtml5.git"
+  },
+  "author": "Remy Sharp & Bruce Lawson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/remy/introducinghtml5/issues"
+  },
+  "private": true,
+  "dependencies": {
+    "markdown": "~0.5.0",
+    "express": "~3.4.0",
+    "hbs": "~2.4.0",
+    "showdown": "~0.3.1"
+  }
+}
