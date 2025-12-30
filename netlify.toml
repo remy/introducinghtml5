@@ -1,0 +1,8 @@
+[build]
+publish = "."
+
+[[redirects]]
+from = "/examples/*"
+to = "https://github.com/remy/introducinghtml5/tree/master/examples/:splat"
+status = 301
+force = true
